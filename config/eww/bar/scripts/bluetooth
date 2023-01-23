@@ -1,0 +1,59 @@
+#!/bin/bash
+
+TOOLTIP=""
+
+icon() {
+    # not connected
+    if [ $(bluetoothctl show | grep "Powered: yes" | wc -c) -eq 0 ]; then
+        #     echo $HOME/.local/icons/bluetooth-off.svg
+        echo "assets/icons/bluetooth-off.png"
+    else
+        # connected, but no device
+        if [ $(echo info | bluetoothctl | grep 'Device' | wc -c) -eq 0 ]; then
+            #     echo $HOME/.local/icons/bluetooth-on.svg
+            echo "assets/icons/bluetooth-on.png"
+        else
+            # get device alias
+            echo "assets/icons/bluetooth-connected.png"
+        fi
+    fi
+}
+
+state() {
+    # not connected
+    if [ $(bluetoothctl show | grep "Powered: yes" | wc -c) -eq 0 ]; then
+        #     echo $HOME/.local/icons/bluetooth-off.svg
+        echo "Off"
+        TOOLTIP="Bluetooth Off"
+
+    else
+        # connected, but no device
+        if [ $(echo info | bluetoothctl | grep 'Device' | wc -c) -eq 0 ]; then
+            #     echo $HOME/.local/icons/bluetooth-on.svg
+            echo "On"
+            TOOLTIP="Bluetooth On"
+        else
+            # get device alias
+            DEVICE=`echo info | bluetoothctl | grep 'Alias:' | awk -F:  '{ print $2 }'`
+            HEADPHONES=`upower -e | grep headphones | awk -F/ '{print $6}'`
+            BATTERY=`upower -i /org/freedesktop/UPower/devices/$HEADPHONES | grep percentage | grep -Po '\d+%'`
+
+            if [[ -z $BATTERY ]]; then
+                TOOLTIP="Connected to $DEVICE"
+                echo "$DEVICE"
+            else
+                TOOLTIP="Connected to $DEVICE ($BATTERY)"
+                echo "$DEVICE ($BATTERY)"
+            fi
+        fi
+    fi
+}
+
+if [[ $1 == "--state" ]]; then
+    state
+elif [[ $1 == "--icon" ]]; then
+    icon
+elif [[ $1 == "--tooltip" ]]; then
+    state &> /dev/null
+    echo $TOOLTIP
+fi

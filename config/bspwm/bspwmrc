@@ -1,0 +1,68 @@
+#!/bin/sh
+
+pgrep -x sxhkd > /dev/null || sxhkd &
+
+# General config
+bspc monitor -d 1 2 3 4 5 6 7 8 9 10
+
+# bspc config border_radius		    15
+bspc config border_width          0
+bspc config window_gap           10
+
+bspc config focus_follows_pointer true
+
+bspc config split_ratio          0.52
+bspc config borderless_monocle   true
+bspc config gapless_monocle      true
+
+# Xorg
+USERRES="$HOME/.Xresources"
+
+if [ -f "$USERRES" ]; then
+    xrdb -load "$USERRES"
+fi
+
+xset s 600 dpms 600 900 900
+xsetroot -cursor_name left_ptr
+
+# App rule
+$HOME/.config/bspwm/app-rules > /dev/null 2>&1
+
+# external rules
+bspc config external_rules_command $HOME/.config/bspwm/external-rules
+
+# Wallpaper
+feh --no-fehbg --bg-fill $HOME/.wallpaper/wallpaper.jpg
+
+# Bar
+killall -q eww
+$HOME/.local/bin/eww -c $HOME/.config/eww/bar open bar
+
+NODE_STATE_PID=$(pgrep -f 'bspc subscribe node_state')
+if [[ -z $NODE_STATE_PID ]]; then
+    bspc subscribe node_state | while read -r _ _ _ _ state flag; do
+        if [ "$state" != "fullscreen" ]; then
+            continue
+        fi
+
+        if [ "$flag" == on ]; then
+            $HOME/.local/bin/eww -c $HOME/.config/eww/bar close-all
+        else
+            $HOME/.local/bin/eww -c $HOME/.config/eww/bar open bar
+        fi
+    done &
+fi
+
+# Urxvtd
+killall -q urxvtd
+urxvtd -q -o -f &
+
+# Picom
+killall -q picom
+picom --config $HOME/.config/picom/picom.conf &
+
+# Autostart
+$HOME/.config/bspwm/autostart > /dev/null 2>&1
+
+# notify complete
+dunstify -a "System" "Welcome $USER !"

@@ -1,0 +1,43 @@
+#!/bin/sh
+
+export DISPLAY=":0"
+export XAUTHORITY="$HOME/.Xauthority"
+export XDG_RUNTIME_DIR="/run/user/1000"
+
+source $HOME/.r3dmoon_var
+
+PLAYER_STATUS=$(playerctl status 2> /dev/null)
+
+player_pause(){
+    [[ "$PLAYER_STATUS" == "Playing" ]] && playerctl pause
+}
+
+player_play(){
+    [[ "$PLAYER_STATUS" == "Paused" ]] && playerctl play
+}
+
+notify_low(){
+    ICON="$HOME/.local/share/icons/system/battery-low.svg"
+
+    player_pause
+    dunstify -i $ICON -r 5674 -u normal -t 10000 "Battery Low! Please Charge!"
+    mpg123 --loop 3 -q $HOME/Music/battery_low.mp3
+    player_play
+}
+
+notify_full(){
+    ICON="$HOME/.local/share/icons/system/battery-full.svg"
+
+    player_pause
+    dunstify -i $ICON -r 5674 -u normal -t 10000 "Battery Full! Please Unplug The Charger!"
+    mpg123 --loop 3 -q $HOME/Music/battery_full.mp3
+    player_play
+}
+
+{
+    BATT_PERC=$(acpi -b | grep -Po '(\d+%)' | grep -Po '\d+')
+    BATT_STATE=$(acpi -b | grep -Po 'Charging|Discharging|Unknown')
+
+    [[ $BATT_PERC -lt $BATT_MIN_PERCENTAGE && "$BATT_STATE" == "Discharging" ]] && notify_low
+    [[ $BATT_PERC -gt $BATT_MAX_PERCENTAGE ]] && [[ "$BATT_STATE" == "Charging" || "$BATT_STATE" == "Unknown" ]] && notify_full
+}

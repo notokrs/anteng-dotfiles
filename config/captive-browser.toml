@@ -1,0 +1,9 @@
+browser = """
+	brave \
+	--proxy-server="socks5://$PROXY" \
+	--host-resolver-rules="MAP * ~NOTFOUND , EXCLUDE localhost" \
+	--no-first-run --new-window --incognito \
+"""
+
+dhcp-dns = 'ip addr show wlan0 | grep -Po "inet \K[\d.]+" | sed "s/[0-9]*$/1/"'
+socks5-addr = "localhost:1666"

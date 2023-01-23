@@ -1,0 +1,55 @@
+#!/bin/sh
+
+WIREPLUMBER_PID=`pgrep wireplumber`
+MPDRIS_PID=`pgrep -f mpDris2`
+LXPOLKIT_PID=`pgrep lxpolkit`
+PIPEWIRE_PID=`pgrep -f pipewire`
+PIPEWIRE_PULSE_PID=`pgrep -f pipewire-pulse`
+
+# pipewire
+[[ -z $PIPEWIRE_PID ]] && pipewire &
+[[ -z $PIPEWIRE_PULSE_PID ]] && pipewire-pulse &
+[[ -z $WIREPLUMBER_PID ]] && wireplumber &
+
+# dunst
+killall dunst
+dunst &
+
+# mpDris2
+kill -9 $MPDRIS_PID
+mpDris2 &
+
+# locker & suspend
+killall xidlehook
+xidlehook --not-when-fullscreen --not-when-audio --timer 600 '~/.local/bin/lockscreen' '' --timer 900 'loginctl suspend' '' &
+
+# clight
+killall clight
+clight &
+
+# polkit
+[[ -z $LXPOLKIT_PID ]] && /usr/lib/lxpolkit/lxpolkit &
+
+# greenclip
+killall greenclip
+greenclip daemon &
+
+# megasync
+killall mega-cmd-server
+mega-cmd-server &
+
+# keepassxc
+killall keepassxc
+keepassxc &
+
+# kdeconnect
+killall /usr/lib/kdeconnectd
+/usr/lib/kdeconnectd &
+
+#playerctld
+killall playerctld
+playerctld &
+
+#xsuspender
+killall xsuspender
+nohup xsuspender & disown

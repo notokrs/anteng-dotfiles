@@ -1,0 +1,15 @@
+#!/bin/bash
+
+{
+    case $1 in
+        "--network")
+            export ROFI_COMMAND="rofi -dmenu -theme "$HOME/.config/rofi/network.rasi""
+            rofi-connman ;;
+        "--bluetooth") blueman-manager ;;
+            # "--battery") xfce4-power-manager-settings ;;
+        "--volume") pavucontrol ;;
+        "--taskmanager") gnome-system-monitor ;;
+        "--terminal") urxvtc ;;
+        *) echo "error" ;;
+    esac
+}

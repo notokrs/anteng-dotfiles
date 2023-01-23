@@ -1,0 +1,44 @@
+#!/bin/bash
+level() {
+    BAT=`ls /sys/class/power_supply | grep BAT | head -n 1`
+    cat /sys/class/power_supply/${BAT}/capacity
+}
+state() {
+    BAT=`ls /sys/class/power_supply | grep BAT | head -n 1`
+    cat /sys/class/power_supply/${BAT}/status
+}
+icon() {
+    level=$(level)
+    stats=$(state)
+
+    if [[ "$stats" == *"Charging"* ]]; then
+        if [[ "$level" -ge "95" ]]; then
+            echo "assets/icons/battery-empty-charging.png"
+        elif [[ "$level" -ge "50" ]]; then
+            echo "assets/icons/battery-empty-charging.png"
+        elif [[ "$level" -ge "20" ]]; then
+            echo "assets/icons/battery-empty-charging.png"
+        else
+            echo "assets/icons/battery-empty-charging.png"
+        fi
+    else
+        if [[ "$level" -ge "95" ]]; then
+            echo "assets/icons/battery-full.png"
+        elif [[ "$level" -ge "50" ]]; then
+            echo "assets/icons/battery-medium.png"
+        elif [[ "$level" -ge "20" ]]; then
+            echo "assets/icons/battery-low.png"
+        else
+            echo "assets/icons/battery-empty.png"
+        fi
+    fi
+}
+
+{
+    case $1 in
+        "--level") level ;;
+        "--state") state ;;
+        "--icon") icon ;;
+        *) "error" ;;
+    esac
+}

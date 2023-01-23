@@ -1,0 +1,16 @@
+# mpd
+config/mpd/mpd.state
+config/mpd/mpd.log
+config/mpd/mpd.db
+config/mpd/db
+config/mpd/mpd.pid
+
+# urxvt
+misc/urxvt/urxvtd-moonl4nd
+
+# gtk-3
+config/gtk-3.0/bookmarks
+
+# xfce4
+config/xfce4/xfconf
+config/Thunar/accels.scm

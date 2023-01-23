@@ -1,0 +1,54 @@
+#!/bin/bash
+
+# modified from = https://gist.github.com/dagelf/ab2bad26ce96fa8d79b0834cd8cab549
+
+# get active interface
+interface=`ip addr | awk '/state UP/ {print $2}' | sed 's/.$//' | head -n1 | awk '{print $1}'`
+tether=`ip addr | awk '/usb0:/ {print $2}' | sed 's/.$//'`
+sleep=1
+
+# check usb tethering
+if [[ ! -z $tether  ]]; then
+    interface=$tether
+fi
+
+# fallback if active inteface not found
+if [[ -z $interface && -z $tether ]]; then
+    interface="wlan0"
+fi
+
+line=`grep $interface /proc/net/dev 2> /dev/null | sed s/.*://`;
+received1=`echo $line | awk '{print $1}'`
+transmitted1=`echo $line | awk '{print $9}'`
+total=$(($received1 + $transmitted1))
+
+sleep $sleep
+
+line=`grep $interface /proc/net/dev 2> /dev/null | sed s/.*://`;
+received2=`echo $line | awk '{print $1}'`
+transmitted2=`echo $line | awk '{print $9}'`
+
+speed=$((($received2 + $transmitted2 - $total)/$sleep))
+download=$((($received2 - $received1)/$sleep))
+upload=$((($transmitted2 - $transmitted1)/$sleep))
+
+download(){
+    echo "$(($download/1024))";
+}
+
+upload(){
+    echo "$(($upload/1024))";
+}
+
+total(){
+    echo "$(($speed/1024))";
+}
+
+{
+    case $1 in
+        "--download") download ;;
+        "--upload") upload ;;
+            # "--total") total ;;
+        "--interface") echo $interface ;;
+    esac
+}

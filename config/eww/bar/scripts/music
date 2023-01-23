@@ -1,0 +1,196 @@
+#!/bin/sh
+
+# scripts edited from adi1090x
+
+# dependencies : playerctl
+
+# Ignored list player
+IGNORE_PLAYER_LIST=("smplayer")
+
+STATUS=`playerctl status --ignore-player=$(IFS=,; echo "${IGNORE_PLAYER_LIST[*]}") 2> /dev/null`
+MUSIC_DIR=`cat ~/.ncmpcpp/config | grep 'mpd_music_dir' | awk -F'"' '{print $2}'`
+
+ALBUM_ART_FOLDER="/tmp/album_art"
+
+if [[ ! -d $ALBUM_ART_FOLDER ]]; then
+    mkdir $ALBUM_ART_FOLDER
+fi
+
+COVER="assets/images/cover.jpg"
+
+TRACKID_SPOTIFY=`playerctl --ignore-player=$(IFS=,; echo "${IGNORE_PLAYER_LIST[*]}") metadata mpris:trackid 2> /dev/null | awk -F/ '{print $NF}'`
+TRACKID_MPD=`playerctl --ignore-player=$(IFS=,; echo "${IGNORE_PLAYER_LIST[*]}") metadata mpris:trackid 2> /dev/null | awk -F/ '{print $NF}' | sed "s/['\"]//g"`
+
+COVER_URL=`playerctl --ignore-player=$(IFS=,; echo "${IGNORE_PLAYER_LIST[*]}") metadata mpris:artUrl 2> /dev/null`
+
+## Get status
+get_status() {
+    if [[ $STATUS == *"Playing"* ]]; then
+        echo ""
+    else
+        echo ""
+    fi
+}
+
+get_status_bool(){
+    if [[ $STATUS == *"Playing"* || $STATUS == *"Paused"* || $STATUS == *"Stopped"* ]]; then
+        echo "true"
+    else
+        echo "false"
+    fi
+}
+
+# Get song
+# get_song() {
+# 	song_pid=$(pgrep -fa "playerctl --ignore-player=$(IFS=,; echo "${IGNORE_PLAYER_LIST[*]}") --follow metadata title")
+# 	if [[ -z  $song_pid ]]; then
+# 		playerctl --ignore-player=$(IFS=,; echo "${IGNORE_PLAYER_LIST[*]}") --follow metadata title | while read -r title; do
+# 				echo $title
+
+# 			if [[ $STATUS != *"Playing"* || $STATUS != *"Paused"* ]]; then
+# 				kill song_pid &> /dev/null
+# 			fi
+# 		done
+# 	fi
+# }
+
+get_song() {
+    title=`playerctl --ignore-player=$(IFS=,; echo "${IGNORE_PLAYER_LIST[*]}") metadata title 2> /dev/null`
+
+    if [[ $STATUS == *"Playing"* || $STATUS == *"Paused"* || $STATUS == *"Stopped"* ]]; then
+        echo $title
+    else
+        echo "Media Not Found"
+    fi
+}
+
+# Get artist
+# get_artist() {
+# 	artist_pid=$(pgrep -fa "playerctl --ignore-player=$(IFS=,; echo "${IGNORE_PLAYER_LIST[*]}") --follow metadata artist")
+# 	if [[ -z  $artist_pid ]]; then
+# 		playerctl --ignore-player=$(IFS=,; echo "${IGNORE_PLAYER_LIST[*]}") --follow metadata artist | while read -r artist; do
+# 			echo $artist
+
+# 			if [[ $STATUS != *"Playing"* || $STATUS != *"Paused"* ]]; then
+# 				kill artist_pid &> /dev/null
+# 			fi
+# 		done
+# 	fi
+# }
+
+get_artist() {
+    artist=`playerctl --ignore-player=$(IFS=,; echo "${IGNORE_PLAYER_LIST[*]}") metadata artist 2> /dev/null`
+
+    if [[ $STATUS == *"Playing"* || $STATUS == *"Paused"* ]]; then
+        echo $artist
+    fi
+}
+
+## Get time
+get_percent() {
+    position=`playerctl --ignore-player=$(IFS=,; echo "${IGNORE_PLAYER_LIST[*]}") position | awk -F. '{print $1}'`
+    length=`playerctl --ignore-player=$(IFS=,; echo "${IGNORE_PLAYER_LIST[*]}") metadata mpris:length 2> /dev/null`
+
+    length=$(($length/1000000))
+
+    percent=`awk "BEGIN{print ($position/$length)*100}" | awk -F. '{print $1}'`
+    if [[ -z $percent  ]]; then
+        echo "0"
+    else
+        echo "$percent"
+    fi
+}
+
+get_position() {
+    position=`playerctl --ignore-player=$(IFS=,; echo "${IGNORE_PLAYER_LIST[*]}") position | awk -F. '{print $1}'`
+    if [[ -z $position ]]; then
+        echo "0"
+    else
+        echo $position
+    fi
+}
+
+get_player(){
+    playerctl --ignore-player=$(IFS=,; echo "${IGNORE_PLAYER_LIST[*]}") metadata | awk 'NR==1{print $1}'
+}
+
+get_bg(){
+    TITLE=`playerctl --ignore-player=$(IFS=,; echo "${IGNORE_PLAYER_LIST[*]}") metadata title | sed 's/ //g' | awk '{print tolower($0)}'`
+    if [[ $STATUS == *"Playing"* || $STATUS == *"Paused"* || $STATUS == *"Stopped"* ]];then
+        case "$(get_player)" in
+            "spotify")
+                BG="$ALBUM_ART_FOLDER/bg_$TRACKID_SPOTIFY.jpg"
+                echo $BG
+                ;;
+            "mpd")
+                BG="$ALBUM_ART_FOLDER/bg_$TITLE-$TRACKID_MPD.jpg"
+                echo $BG
+                ;;
+            "chromium")
+                echo ""
+                ;;
+            *)
+                echo ""
+                ;;
+        esac
+    else
+        echo ""
+    fi
+}
+
+## Get cover
+get_cover() {
+    if [[ $STATUS == *"Playing"* || $STATUS == *"Paused"* || $STATUS == *"Stopped"* ]];then
+        case "$(get_player)" in
+            "spotify")
+                COVER="$ALBUM_ART_FOLDER/cover_$TRACKID_SPOTIFY.jpg"
+                BG="$ALBUM_ART_FOLDER/bg_$TRACKID_SPOTIFY.jpg"
+
+                if [[ ! -f $COVER ]]; then
+                    curl $COVER_URL > $COVER
+                    ffmpeg -i "$COVER" -vf scale=200:200 "$COVER"  -y &> /dev/null
+                    convert -brightness-contrast -50x-30 -blur 0x25 "$COVER" "$BG"
+                fi
+
+                echo $COVER
+                ;;
+            "mpd")
+                TITLE=`playerctl --ignore-player=$(IFS=,; echo "${IGNORE_PLAYER_LIST[*]}") metadata title | sed 's/ //g' | awk '{print tolower($0)}'`
+                COVER="$ALBUM_ART_FOLDER/cover_$TITLE-$TRACKID_MPD.jpg"
+                BG="$ALBUM_ART_FOLDER/bg_$TITLE-$TRACKID_MPD.jpg"
+
+                if [[ ! -f $COVER ]]; then
+                    ffmpeg -i "$MUSIC_DIR/$(mpc current -f %file%)" -vf scale=200:200 "$COVER"  -y &> /dev/null
+                    convert -brightness-contrast -50x-30 -blur 0x25 "$COVER" "$BG"
+                fi
+
+                echo $COVER
+                ;;
+            "chromium")
+                echo $COVER
+                ;;
+            *)
+                echo $COVER
+                ;;
+        esac
+    else
+        echo $COVER
+    fi
+}
+
+{
+    case $1 in
+        "--song") get_song ;;
+        "--artist") get_artist ;;
+        "--status") get_status ;;
+        "--status_bool") get_status_bool ;;
+        "--percent") get_percent ;;
+        "--position") get_position ;;
+        "--cover") get_cover ;;
+        "--player") get_player ;;
+        "--bg") get_bg ;;
+        "--toggle") playerctl play-pause ;;
+        "--next") { playerctl next; get_cover; } ;;
+        "--prev") { playerctl previous; get_cover; } ;;
+    esac
+}

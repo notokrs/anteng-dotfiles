@@ -1,0 +1,172 @@
+#!/bin/bash
+
+# dependencies = cpupower-gui (bc cpupower-gui doesn't require root when change governor), networkmanager, xorg-xset, clight
+
+WIFI=`awk 'NR==3 {printf("%.0f",$3*10/7)}' /proc/net/wireless`
+BLUETOOTH=`bluetoothctl show | grep "Powered: yes" | wc -c`
+#REDSHIFT=`pgrep redshift`
+CLIGHT=`pgrep -fx clight`
+CLIGHT_NOGAMMA=`pgrep -fx 'clight --no-gamma'`
+GOVERNOR=`cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor`
+DPMS_STATUS=`xset q | grep 'DPMS is' | awk 'NF>1{print $NF}'`
+
+wifi(){
+    if [[ $WIFI != "" ]]; then
+        echo "(eventbox :cursor \"pointer\" :onclick \"scripts/syscontrol --wifi_toggle\" (box :class \"wifi sys-on\" :orientation \"h\"  :space-evenly false :halign \"center\" (box :style \"background-image: url('assets/icons/wifi-sys-on.png')\")(label :text \"Wifi\")))"
+    else
+        echo "(eventbox :cursor \"pointer\" :onclick \"scripts/syscontrol --wifi_toggle\" (box :class \"wifi\" :orientation \"h\" :space-evenly false :halign \"center\" (box :style \"background-image: url('assets/icons/wifi-full.png')\")(label :text \"Wifi\")))"
+    fi
+}
+
+wifi_toggle(){
+    if [[ $WIFI != "" ]]; then
+        nmcli radio wifi off
+        rfkill block wlan
+        dunstify "Wifi off" -a "System"
+    else
+        if [ $(rfkill | grep wlan | awk {'print $4'}) == 'unblocked' ]; then
+            nmcli radio wifi on
+        else
+            rfkill unblock wlan
+            nmcli radio wifi on
+        fi
+        dunstify "Wifi on" -a "System"
+    fi
+}
+
+bluetooth(){
+    if [[ ! $BLUETOOTH -eq 0 ]]; then
+        echo "(eventbox :cursor \"pointer\" :onclick \"scripts/syscontrol --bluetooth_toggle\" (box :class \"bluetooth sys-on\" :orientation \"h\" :space-evenly false :halign \"center\" (box :style \"background-image: url('assets/icons/bluetooth-sys-on.png')\") (label :text \"Bluetooth\")))"
+    else
+        echo "(eventbox :cursor \"pointer\" :onclick \"scripts/syscontrol --bluetooth_toggle\" (box :class \"bluetooth\" :orientation \"h\" :space-evenly false :halign \"center\" (box :style \"background-image: url('assets/icons/bluetooth-on.png')\") (label :text \"Bluetooth\")))"
+    fi
+}
+
+bluetooth_toggle(){
+    if [[ ! $BLUETOOTH -eq 0 ]]; then
+        if [ $(rfkill | grep bluetooth | awk {'print $4'}) == 'unblocked' ]; then
+            dunstify "Bluetooth off" -a "System"
+            rfkill block bluetooth
+        fi
+    else
+        if [ $(rfkill | grep bluetooth | awk {'print $4'}) == 'unblocked' ]; then
+            bluetoothctl power on
+        else
+            rfkill unblock bluetooth
+        fi
+        dunstify "Bluetooth on" -a "System"
+    fi
+}
+
+night_light(){
+    if [[ -n $CLIGHT ]]; then
+        echo "(eventbox :cursor \"pointer\" :onclick \"scripts/syscontrol --night_light_toggle\" (box :class \"night-light sys-on\" :orientation \"h\" :space-evenly false :halign \"center\" (box :style \"background-image: url('assets/icons/night-light-sys-on.png')\") (label :text \"Night Light\")))"
+    fi
+
+    if [[ -n $CLIGHT_NOGAMMA ]]; then
+        echo "(eventbox :cursor \"pointer\" :onclick \"scripts/syscontrol --night_light_toggle\" (box :class \"night-light\" :orientation \"h\" :space-evenly false :halign \"center\" (box :style \"background-image: url('assets/icons/night-light-sys-off.png')\") (label :text \"Night Light\")))"
+    fi
+
+    if [[ -z $CLIGHT && -z $CLIGHT_NOGAMMA ]]; then
+        echo "(eventbox :cursor \"pointer\" :onclick \"scripts/syscontrol --night_light_toggle\" (box :class \"night-light\" :orientation \"h\" :space-evenly false :halign \"center\" (box :style \"background-image: url('assets/icons/night-light-sys-off.png')\") (label :text \"Night Light\")))"
+    fi
+}
+
+night_light_toggle(){
+    if [[ -n $CLIGHT ]]; then
+        killall clight
+        clight --no-gamma &
+        dunstify "Night Light Disabled" -a "System"
+    fi
+
+    if [[ -n $CLIGHT_NOGAMMA ]]; then
+        killall clight
+        clight &
+        dunstify "Night Light Enabled" -a "System"
+    fi
+
+    if [[ -z $CLIGHT && -z $CLIGHT_NOGAMMA ]]; then
+        clight &
+        dunstify "Night Light Enabled" -a "System"
+    fi
+}
+
+night_light_status(){
+    if [[ -n $CLIGHT ]]; then
+        echo "true"
+    fi
+
+    if [[ -n $CLIGHT_NOGAMMA ]]; then
+        echo "false"
+    fi
+
+    if [[ -z $CLIGHT && -z $CLIGHT_NOGAMMA ]]; then
+        echo "false"
+    fi
+}
+
+cpu_profile(){
+    if [[ $GOVERNOR ==  "schedutil" ]]; then
+        echo "(eventbox :cursor \"pointer\" :onclick \"scripts/syscontrol --cpu_profile_toggle\" (box :class \"cpu-profile\" :orientation \"h\" :space-evenly false :halign \"center\" (box :style \"background-image: url('assets/icons/speedometer.png')\") (label :text \"Balanced\")))"
+    fi
+
+    if [[ $GOVERNOR ==  "performance" ]]; then
+        echo "(eventbox :cursor \"pointer\" :onclick \"scripts/syscontrol --cpu_profile_toggle\" (box :class \"cpu-profile\" :orientation \"h\" :space-evenly false :halign \"center\" (box :style \"background-image: url('assets/icons/speedometer.png')\") (label :text \"Performance\")))"
+    fi
+
+    if [[ $GOVERNOR ==  "powersave" ]]; then
+        echo "(eventbox :cursor \"pointer\" :onclick \"scripts/syscontrol --cpu_profile_toggle\" (box :class \"cpu-profile\" :orientation \"h\" :space-evenly false :halign \"center\" (box :style \"background-image: url('assets/icons/speedometer.png')\") (label :text \"Powersave\")))"
+    fi
+}
+
+cpu_profile_toggle(){
+    if [[ $GOVERNOR == "schedutil" ]]; then
+        cpupower-gui pr Performance
+    fi
+
+    if [[ $GOVERNOR == "performance" ]]; then
+        cpupower-gui pr Powersave
+    fi
+
+    if [[ $GOVERNOR == "powersave" ]]; then
+        cpupower-gui pr Balanced
+    fi
+}
+
+caffeine_toggle() {
+    if [[ $DPMS_STATUS == "Enabled" ]];then
+        xset -dpms
+        dunstify "Caffeine: ON" "(DPMS Disabled)" -t 3000 -r 1 -a "System"
+
+    else
+        xset +dpms
+        dunstify "Caffeine: OFF" "(DPMS Enabled)" -t 3000 -r 1 -a "System"
+    fi
+}
+
+caffeine_mode() {
+    if [[ $DPMS_STATUS = "Disabled" ]]; then
+        echo "(eventbox :cursor \"pointer\" :onclick \"scripts/syscontrol --caffeine_toggle\" (box :class \"caffeine sys-on\" :orientation \"h\"  :space-evenly false :halign \"center\" (box :style \"background-image: url('assets/icons/caffeine-off.png')\")(label :text \"Caffeine\")))"
+    else
+        echo "(eventbox :cursor \"pointer\" :onclick \"scripts/syscontrol --caffeine_toggle\" (box :class \"caffeine\" :orientation \"h\" :space-evenly false :halign \"center\" (box :style \"background-image: url('assets/icons/caffeine.png')\")(label :text \"Caffeine\")))"
+    fi
+}
+
+{
+    case $1 in
+        "--wifi") wifi ;;
+        "--wifi_toggle") wifi_toggle ;;
+        "--bluetooth") bluetooth ;;
+        "--bluetooth_toggle") bluetooth_toggle ;;
+        "--night_light") night_light ;;
+        "--night_light_toggle") night_light_toggle ;;
+        "--night_light_status") night_light_status ;;
+        "--cpu_profile") cpu_profile ;;
+        "--cpu_profile_toggle") cpu_profile_toggle ;;
+        "--caffeine_mode") caffeine_mode ;;
+        "--caffeine_toggle") caffeine_toggle ;;
+        "--caffeine_status") if [[ $DPMS_STATUS == "Disabled" ]]; then echo "true"; else echo "false"; fi ;;
+        "--terminal") terminal ;;
+        *) "error" ;;
+    esac
+}

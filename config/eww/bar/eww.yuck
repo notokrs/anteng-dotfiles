@@ -1,0 +1,332 @@
+; constant
+(defvar eww_bar "$HOME/.local/bin/eww -c $HOME/.config/eww/bar/")
+(defvar duration "500ms")
+
+(deflisten workspace "scripts/workspace")
+(defpoll time :interval "10s" "date '+%H : %M'")
+(defpoll date :interval "60s" "date '+%A, %d %B %Y'")
+
+; Battery
+; (defvar battery_man "scripts/appservice --battery")
+(defpoll battery_lvl :interval "5s" "scripts/battery --level")
+(defpoll battery_state :interval "5s" "scripts/battery --state")
+(defpoll battery_icon :interval "5s" "scripts/battery --icon")
+
+; Bluetooth
+(defvar blue_reveal false)
+(defvar blue_man "scripts/appservice --bluetooth")
+(defpoll blue_state :interval "3s" "scripts/bluetooth --state")
+(defpoll blue_icon :interval "3s" "scripts/bluetooth --icon")
+(defpoll blue_tip :interval "3s" "scripts/bluetooth --tooltip")
+
+; Wifi
+(defvar wifi_reveal false)
+(defvar network_man "scripts/appservice --network")
+(defpoll wifi_icon :interval "3s" "scripts/wifi --icon")
+(defpoll wifi_ssid :interval "3s" "scripts/wifi --ssid")
+(defpoll wifi_state :interval "3s" "scripts/wifi --state")
+
+; Netspeed
+(defpoll download :interval "2s" "scripts/netspeed --download")
+(defpoll upload :interval "2s" "scripts/netspeed --upload")
+(defpoll interface :interval "5s" "scripts/netspeed --interface")
+
+; Volume
+(defvar volume_reveal false)
+(defvar volume_man "scripts/appservice --volume")
+(defpoll volume_lvl :interval "2s" "scripts/volume --level")
+(defpoll volume_icon :interval "2s" "scripts/volume --icon")
+
+; Brightness
+(defvar bright_reveal false)
+(defpoll bright_lvl :interval "2s" "scripts/brightness --level")
+; (defpoll bright_icon :interval "1s" "scripts/brightness --icon")
+
+; Music
+(defpoll song :interval "2s" "scripts/music --song")
+(defpoll song_artist :interval "2s" "scripts/music --artist")
+; (deflisten song  "scripts/music --song")
+; (deflisten song_artist "scripts/music --artist")
+(defpoll current_status :interval "2s" "scripts/music --percent")
+(defpoll song_status :interval "2s" "scripts/music --status")
+(defpoll cover_art :interval "2s" "scripts/music --cover")
+(defpoll bg_art :interval "2s" "scripts/music --bg")
+(defpoll player :interval "2s" "scripts/music --player")
+
+; Calendar
+(defpoll calendar_day :interval "24h" "date '+%d'")
+(defpoll calendar_year :interval "24h" "date '+%Y'")
+
+; System
+(defvar taskman "scripts/appservice --taskmanager")
+(defpoll temperature :interval "2s" "scripts/gettemp")
+
+; Notification
+(deflisten notification "scripts/notification --monitor")
+
+; Systray
+(defpoll systray_status :interval "1s" "scripts/systray --status")
+
+; SysControl
+(defpoll wifi_sys :interval "3s" "scripts/syscontrol --wifi")
+(defpoll blue_sys :interval "3s" "scripts/syscontrol --bluetooth")
+(defpoll night_light_sys :interval "3s" "scripts/syscontrol --night_light")
+(defpoll cpu_power_sys :interval "3s" "scripts/syscontrol --cpu_profile")
+(defpoll caffeine_sys :interval "3s" "scripts/syscontrol --caffeine_mode")
+
+;Status
+(defpoll caffeine_status :interval "5s" "scripts/syscontrol --caffeine_status")
+(defpoll music_stats :interval "5s" "scripts/music --status_bool")
+(defpoll night_light_status :interval "5s" "scripts/syscontrol --night_light_status")
+
+; Widget -----------------------------------------------------------------
+; Workspace
+(defwidget workspaces []
+  (literal :content workspace))
+
+; Battery
+(defwidget battery []
+  (eventbox :cursor "default"
+    (box :class "w-e-container" :orientation "h" :space-evenly false :vexpand "false" :hexpand "false" :tooltip "${battery_state}"
+      (box :class "battery-icon" :style "background-image: url('${battery_icon}');")
+      (label :class "battery-label" :text "${battery_lvl}%"))))
+
+; Wifi
+(defwidget wifi []
+  (eventbox :cursor "pointer" :onclick network_man :onhover "${eww_bar} update wifi_reveal=true"
+    :onhoverlost "${eww_bar} update wifi_reveal=false"
+    (box :class "w-e-container" :orientation "h" :space-evenly false :vexpand "false" :hexpand "false" :tooltip "${wifi_state}"
+      (box :class "wifi-icon" :style "background-image: url('${wifi_icon}');")
+      (revealer :transition "slideright" :reveal wifi_reveal :duration duration
+        (label :class "wifi-label" :text "${wifi_ssid}")))))
+
+; Bluetooth
+(defwidget bluetooth []
+  (eventbox :cursor "pointer" :onclick blue_man :onhover "${eww_bar} update blue_reveal=true"
+    :onhoverlost "${eww_bar} update blue_reveal=false"
+    (box :class "w-e-container" :orientation "h" :space-evenly false :vexpand "false" :hexpand "false" :tooltip "${blue_tip}"
+      (box :class "bluetooth-icon" :style "background-image: url('${blue_icon}');")
+      (revealer :transition "slideright" :reveal blue_reveal :duration duration
+        (label :class "bluetooth-label" :text "${blue_state}")))))
+
+; Netspeed
+; (defwidget netspeed [] ; Use EWW magic variable
+  ;   (box :class "w-e-container netspeed-box" :orientation "h" :space-evenly false :vexpand "false" :hexpand "false" :spacing 5
+    ;     :visible {round(EWW_NET[interface].NET_DOWN / 1024, 0) > 5 ? true : false}
+    ;     (box :class "netspeed" :orientation "h" :space-evenly false :vexpand "false" :hexpand "false"
+      ;       (box :class "netspeed-icon" :style "background-image: url('assets/icons/up.png');")
+      ;       (label :text "${round(EWW_NET[interface].NET_UP / 1024, 0)} kB/s"))
+    ;     (box :orientation "h" :space-evenly false :vexpand "false" :hexpand "false"
+      ;       (box :class "netspeed-icon" :style "background-image: url('assets/icons/down.png');")
+      ;       (label :text "${round(EWW_NET[interface].NET_DOWN / 1024, 0)} kB/s"))))
+(defwidget netspeed [] ; Use Script
+  (box :class "w-e-container netspeed-box" :orientation "h" :space-evenly false :vexpand "false" :hexpand "false" :spacing 5
+    :visible {round(download, 0) > 5 ? true : false}
+    (box :class "netspeed" :orientation "h" :space-evenly false :vexpand "false" :hexpand "false"
+      (box :class "netspeed-icon" :style "background-image: url('assets/icons/up.png');")
+      (label :text "${upload} kB/s"))
+    (box :orientation "h" :space-evenly false :vexpand "false" :hexpand "false"
+      (box :class "netspeed-icon" :style "background-image: url('assets/icons/down.png');")
+      (label :text "${download} kB/s"))))
+
+; Volume
+(defwidget volume []
+  (eventbox :cursor "pointer" :onhover "${eww_bar} update volume_reveal=true"
+    :onhoverlost "${eww_bar} update volume_reveal=false"
+    (box :class "w-e-container" :orientation "h" :space-evenly false :vexpand "false" :hexpand "false" :tooltip "${volume_lvl}%"
+      (eventbox :onclick volume_man (box :class "volume-icon" :style "background-image: url('${volume_icon}');"))
+      (revealer :transition "slideright" :reveal volume_reveal :duration duration
+        (scale :class "volume-scale" :width 100 :active true :value volume_lvl :min 0 :max 101 :orientation "h" :onchange "amixer set Master {}%")))))
+
+; ; Brightness
+(defwidget brightness []
+  (eventbox :cursor "pointer" :onhover "${eww_bar} update bright_reveal=true"
+    :onhoverlost "${eww_bar} update bright_reveal=false"
+    (box :class "w-e-container" :orientation "h" :space-evenly false :vexpand "false" :hexpand "false" :tooltip "${bright_lvl}%"
+      (box :class "bright-icon" :style "background-image: url('assets/icons/brightness.png')")
+      (revealer :transition "slideright" :reveal bright_reveal :duration duration
+        (scale :class "bright-scale" :width 100 :active true :value bright_lvl :min 0 :max 101 :orientation "h" :onchange "xbacklight {}")))))
+
+;caffeine status
+(defwidget caffeine_status_widget []
+  (box :class "w-e-container" :orientation "h" :space-evenly false :vexpand "false" :hexpand "false" 
+    :tooltip "Caffeine is on" :visible {caffeine_status ? true : false} 
+    (box :class "caffeine-icon" :style "background-image: url('assets/icons/caffeine.png')")))
+
+; night light status
+(defwidget night_light_status_widget []
+  (box :class "w-e-container" :orientation "h" :space-evenly false :vexpand "false" :hexpand "false" 
+    :tooltip "Night Light is on" :visible {night_light_status ? true : false}
+    (box :class "night-light-icon" :style "background-image: url ('assets/icons/night-light-sys-off.png')")))
+
+; Music
+(defwidget music_pop []
+  (box :class "music-pop" :orientation "h" :space-evenly false :vexpand "false" :hexpand "false" :style "background-image: url('${bg_art}');"
+    :visible {music_stats ? true : false}
+    (box :class "music-cover-art" :space-evenly false :vexpand "false" :hexpand "false" :style "background-image: url('${cover_art}');")
+    (box :class "music-info" :orientation "v" :spacing 0 :space-evenly false :vexpand "false" :hexpand "false"
+      (box :orientation "h"
+        (label :halign "start" :class "music-title" :wrap false :show_truncated false :limit-width 14 :text song)
+        (box :class "music-player" :space-evenly false :spacing 10 :halign "end"
+          (label :class "icon" :halign "start" :text "")
+          (label :text "${player}")))
+      (label :halign "start" :class "music-artist" :wrap "true" :show_truncated false :limit-width 35 :text song_artist)
+      (box :class "music-control" :orientation "h" :spacing 46 :halign "start" :space-evenly false :vexpand "false" :hexpand "false"
+        (eventbox :cursor "pointer" (button :class "music-btn-prev" :onclick "scripts/music --prev" ""))
+        (eventbox :cursor "pointer" (button :class "music-btn-play" :onclick "scripts/music --toggle" song_status))
+        (eventbox :cursor "pointer" (button :class "music-btn-next" :onclick "scripts/music --next" "")))
+      (box :class "music-bar" :halign "center" :vexpand "false" :hexpand "false" :space-evenly false
+        (progress :active "true" :value current_status)
+      ))))
+
+; Calendar
+(defwidget cal []
+  (box :class "cal" :orientation "v"
+    (box :class "cal-in"
+      (calendar
+        :class "cal"
+        :day calendar_day
+      :year calendar_year ))))
+
+; System
+(defwidget system []
+  (box :class "sys-win" :orientation "h" :space-evenly false :hexpand "false" :vexpand "false" :spacing 0
+    (box :class "sys-cpu-box" :orientation "v" :space-evenly false :hexpand "false" :vexpand "false"
+      (circular-progress :value {EWW_CPU.avg}
+        :class "sys-cpu"
+        :thickness 11
+        (label :text "${round(EWW_CPU.avg, 0)}%"
+          :class "sys-icon-cpu"
+          :limit-width 3
+        :wrap false))
+  (label :text "CPU" :class "sys-label-cpu"))
+    (box :class "sys-mem-box" :orientation "v" :space-evenly false :hexpand "false" :vexpand "false"
+      (circular-progress :value {EWW_RAM.used_mem_perc}
+        :class "sys-mem"
+        :thickness 11
+        (label :text "${round(EWW_RAM.used_mem_perc, 0)}%"
+          :class "sys-icon-mem"
+          :limit-width 3
+        :wrap false))
+      (label :text "RAM" :class "sys-label-mem"))
+    (box :class "sys-temp-box" :orientation "v" :space-evenly false :hexpand "false" :vexpand "false"
+      (circular-progress :value temperature
+        :class "sys-temp"
+        :thickness 11
+        (label :text "${temperature}°C"
+          :class "sys-icon-temp"
+          :limit-width 4
+        :wrap false))
+      (label :text "TEMP" :class "sys-label-temp"))))
+
+;Notification
+(defwidget notif []
+  (literal :content notification))
+
+; Terminal
+(defwidget terminal []
+  (eventbox :cursor "pointer" :onclick "scripts/appservice --terminal"
+    (box :class "terminal" :orientation "h" :space-evenly false :halign "center"
+      (box :style "background-image: url('assets/icons/terminal.png');")(label :text "Terminal"))
+  ))
+
+; Systray
+(defwidget systray []
+  (eventbox :cursor "pointer" :class "w-container" :onclick "scripts/systray"
+    (button :class "systray" :onclick "scripts/systray --toggle" 
+      :style {systray_status ? "background-image: url('assets/icons/systray-arrow-up.png');" : "background-image: url('assets/icons/systray-arrow-down.png');"})))
+
+(defwidget syscontrol []
+  (box :orientation "v" :class "syscontrol" :space-evenly false :halign "start"
+    (box :class "child" :orientation "h" :space-evenly false :halign "start" :spacing 6
+      (literal :content wifi_sys)
+      (literal :content blue_sys)
+      (literal :content night_light_sys)
+    )
+    (box :orientation "h" :space-evenly false :halign "start" :spacing 6
+      (literal :content cpu_power_sys)
+      (literal :content caffeine_sys)
+      (terminal)
+    )
+  ))
+
+; Start Widget -------------------------------------------------------
+(defwidget start []
+  (eventbox :onscroll "bspc desktop -f {prev,next}.local.occupied"
+    (box :class "start" :orientation "h" :space-evenly false :halign "start"
+      (workspaces)
+      (netspeed)
+    )))
+
+; End Widget
+(defwidget end []
+  (box :class "end" :orientation "h" :space-evenly false :halign "end" :spacing 2
+    (label :class "label" :text "CPU ${round(EWW_CPU.avg, 0)}%" :tooltip "RAM Used ${round(EWW_RAM.used_mem / 1000000, 0)} MiB")
+    (caffeine_status_widget)
+    (night_light_status_widget)
+    (brightness)
+    (volume)
+    (bluetooth)
+    (wifi)
+    (battery)
+    (systray)
+  ))
+
+; Center Widget
+(defwidget center []
+  (eventbox :cursor "pointer"
+    :onclick "${eww_bar} open --toggle controlcenter"
+    (box :class "center"
+      :orientation "h"
+      :space-evenly false
+      :halign "center"
+      :tooltip "${date}"
+    time)
+  ))
+
+; Control center ---------------------------------------------------------
+(defwidget controlcenter []
+  (eventbox
+    ; :onhoverlost "${eww_bar} close controlcenter"
+    (box :class "control-center" :spacing -8 :orientation "h" :space-evenly false :vexpand "false" :hexpand "false"
+      (box :class "w-container" :orientation "v" :spacing 12 :space-evenly false :vexpand "false" :hexpand "false"
+        (syscontrol)
+        (eventbox :cursor "pointer" :onclick taskman (system))
+        (cal)
+      )
+      (box :class "w-container" :orientation "v" :spacing 12 :space-evenly false :vexpand "false" :hexpand "false"
+        (box :orientation "h" :space-evenly false :vexpand "false" :hexpand "false" :halign "start"
+          (box :class "notification-bar" :orientation "h" :space-evenly true
+            (label :class "notification-label" :halign "start" :text "Notification")
+            (eventbox :cursor "pointer" (button :class "notification-clear" :halign "end" :onclick "scripts/notification --clear" :style "background-image: url('assets/icons/clear-all.png');"))))
+        (music_pop)
+        (notif)
+      ))))
+
+(defwindow controlcenter
+  :monitor 0
+  :geometry (geometry
+    :x "0"
+    :y "50px"
+    :anchor "top center"
+    :width "600px")
+  (controlcenter))
+
+; Bar ---------------------------------------------------------------------
+(defwidget bar []
+  (centerbox :orientation "h"
+    (start)
+    (center)
+    (end)))
+
+(defwindow bar
+  :monitor 0
+  :windowtype "dock"
+  :geometry (geometry
+    :x "0%"
+    :y "1%"
+    :width "1346px"
+    :height "28px"
+  :anchor "top center")
+  :reserve (struts :side "top" :distance "5%")
+  (bar))

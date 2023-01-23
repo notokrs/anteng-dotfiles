@@ -1,0 +1,27 @@
+#!/bin/sh
+
+VOL=$(amixer -D pulse get Master | awk -F'[][]' '/Right:|Mono:/ && NF > 1 {sub(/%/, ""); printf "%0.0f\n", $2}')
+
+icon() {
+    stats=$(amixer get -D pulse Master | awk -F'[][]' '/Right:|Mono:/ && NF > 1 {print $4}')
+
+    if [[ $stats == "on" ]]; then
+        if [[ $VOL -ge 75 ]]; then
+            echo "assets/icons/volume-full.png"
+        elif [[ $VOL -ge 45 ]]; then
+            echo "assets/icons/volume-medium.png"
+        elif [[ $VOL -ge 25 ]]; then
+            echo "assets/icons/volume-low.png"
+        else
+            echo "assets/icons/volume-empty.png"
+        fi
+    else
+        echo "assets/icons/volume-mute.png"
+    fi
+}
+
+if [[ $1 = "--level" ]]; then
+    echo $VOL
+elif [[ $1 = "--icon" ]]; then
+    icon
+fi

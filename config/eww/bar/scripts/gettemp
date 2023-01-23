@@ -1,0 +1,3 @@
+#!/bin/bash
+
+echo "$(acpi -t | grep -i 'thermal 1' | awk '{print $4}' | cut -d"." -f1)"

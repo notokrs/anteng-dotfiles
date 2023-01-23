@@ -1,0 +1,57 @@
+#!/bin/sh
+
+##################################
+##     User Scripts Setting     ##
+##################################
+
+# Notify Battery
+# value = 0 - 100
+BATT_MIN_PERCENTAGE=25
+BATT_MAX_PERCENTAGE=90
+
+# Album Art NCMPCPP
+# value = w3m or pixbuf
+NCMPCPP_ALBUM_ART_BACKEND="w3m"
+
+# Clear Cache Spotify
+# value in MB
+CACHE_SPOTIFY_MIN_SIZE=300
+
+# LOCKSCREEN
+LOCK_FG="#ffffff"
+LOCK_WRONG="#db4b4b"
+LOCK_HIGHTLIGHT="#8ebec8"
+LOCK_DATE="#A8E0E1"
+LOCK_VERIFY="#3f6a44"
+
+LOCK_RADIUS=30
+LOCK_RING_WIDTH=10
+LOCK_TIME_SIZE=100
+LOCK_DATE_SIZE=30
+LOCK_VERIF_SIZE=23
+LOCK_GREETER_SIZE=23
+LOCK_WRONG_SIZE=23
+
+LOCK_VERIF_TEXT="Verifying..."
+LOCK_WRONG_TEXT="Wrong Password!"
+LOCK_GREETER_TEXT="Type the password to unlock"
+
+LOCK_TIME_FONT="Rounded Mplus 1c Bold:style=Bold"
+LOCK_DATE_FONT="Rounded Mplus 1c:style=Regular"
+LOCK_VERIF_FONT=$LOCK_DATE_FONT
+LOCK_GREETER_FONT=$LOCK_DATE_FONT
+LOCK_WRONG_FONT=$LOCK_DATE_FONT
+
+LOCK_IND_POS="1140:380"
+LOCK_DATE_POS="1140:250"
+LOCK_TIME_POS="1140:190"
+LOCK_VERIF_POS="1140:460"
+LOCK_GREETER_POS="1140:520"
+LOCK_WRONG_POS="1140:460"
+
+LOCK_WALLPAPER=~/.wallpaper/lockscreen.jpg
+LOCK_POINTER="default"
+LOCK_REFRESH_RATE=0
+
+LOCK_TIME_STR="%H:%M"
+LOCK_DATE_STR="%a, %d %b"

@@ -1,0 +1,704 @@
+// Const
+$border-radius: 16px;
+$font-family: "Rounded Mplus 1c";
+
+// Color
+$bg-dark: #0e1713;
+$fg-dark: #1b2c25;
+$kombu-green: #27412a;
+$hunter-green: #3f6a44;
+
+$artichocke: #9ba686;
+$dark-sky-blue: #8ebec8;
+$powder-blue: #a1d6da;
+$powder-blue-light: #a7dee1;
+$white: #fdf6e3;
+
+* {
+  all: unset;
+}
+
+//Global Styles
+.bar {
+  background-color: $bg-dark;
+  color: $powder-blue-light;
+  padding: 20px;
+  border-radius: $border-radius;
+}
+
+// Widget Position
+.start {
+  margin: 5px 10px 5px;
+}
+.center {
+  font-weight: 700;
+  font-size: 12px;
+  font-family: $font-family;
+}
+.end {
+  font-family: $font-family;
+}
+
+// Utils
+.w-container {
+  // background-color: $hunter-green;
+  padding: 0 10px;
+}
+
+.w-e-container {
+  // background-color: $hunter-green;
+  padding: 0 8px;
+}
+
+.label {
+  font-size: 11px;
+}
+
+// Workspaces
+.workspaces {
+  font-family: $font-family;
+  font-size: 11px;
+  background-color: $fg-dark;
+  border-radius: $border-radius;
+}
+
+.workspaces button {
+  padding: 4px 10px;
+}
+
+// Occupied
+.o1f,
+.o2f,
+.o3f,
+.o4f,
+.o5f,
+.o6f,
+.o7f,
+.o8f,
+.o9f,
+.o10f {
+  color: $hunter-green;
+}
+
+.o1f:hover,
+.o2f:hover,
+.o3f:hover,
+.o4f:hover,
+.o5f:hover,
+.o6f:hover,
+.o7f:hover,
+.o8f:hover,
+.o9f:hover,
+.o10f:hover {
+  transition: 0.5s all;
+  color: $powder-blue-light;
+}
+
+// Focused
+.of1, // only focused
+.of2,
+.of3,
+.of4,
+.of5,
+.of6,
+.of7,
+.of8,
+.of9,
+.of10,
+.o1f1, // occupied and focused
+.o2f2,
+.o3f3,
+.o4f4,
+.o5f5,
+.o6f6,
+.o7f7,
+.o8f8,
+.o9f9,
+.o10f10 {
+  color: $bg-dark;
+  background-color: $powder-blue-light;
+  border-radius: $border-radius;
+  transition: 0.5s all;
+}
+
+scale scale highlight {
+  border-radius: $border-radius;
+}
+
+.battery-icon {
+  background-size: cover;
+  background-position: center;
+  margin: 8px 6px 8px 0;
+  min-width: 22px;
+}
+
+.battery-label {
+  font-size: 11px;
+}
+
+.wifi-icon {
+  background-size: cover;
+  background-position: center;
+  margin: 8px 0;
+  min-width: 16px;
+}
+
+.wifi-label {
+  margin-left: 8px;
+  font-size: 11px;
+}
+
+.bluetooth-icon {
+  background-size: cover;
+  background-position: center;
+  margin: 10px 0px 10px;
+  min-width: 16px;
+}
+
+.bluetooth-label {
+  margin-left: 8px;
+  font-size: 11px;
+}
+
+.volume-icon {
+  background-size: cover;
+  background-position: center;
+  margin: 8px 0px 8px;
+  min-width: 16px;
+}
+
+.volume-scale {
+  margin-left: 8px;
+}
+
+.volume-scale slider {
+  background-color: transparent;
+  min-width: 20px;
+  min-height: 20px;
+  border-radius: $border-radius;
+}
+
+.volume-scale trough {
+  background-color: $fg-dark;
+  border-radius: $border-radius;
+}
+
+.volume-scale highlight {
+  border-top-left-radius: $border-radius;
+  border-bottom-left-radius: $border-radius;
+  background-color: $dark-sky-blue;
+}
+
+.bright-icon {
+  background-size: cover;
+  background-position: center;
+  margin: 10px 0px 10px;
+  min-width: 16px;
+}
+
+.bright-scale {
+  margin-left: 8px;
+}
+
+.bright-scale slider {
+  background-color: transparent;
+  min-width: 20px;
+  min-height: 20px;
+  border-radius: $border-radius;
+}
+
+.bright-scale trough {
+  background-color: $fg-dark;
+  border-radius: $border-radius;
+}
+
+.bright-scale highlight {
+  border-top-left-radius: $border-radius;
+  border-bottom-left-radius: $border-radius;
+  background-color: $dark-sky-blue;
+}
+
+.netspeed-box {
+  font-family: $font-family;
+  font-size: 11px;
+  margin-left: 10px;
+  border-radius: $border-radius;
+  // background-color: $fg-dark;
+}
+
+.netspeed {
+  margin-right: 10px;
+}
+
+.netspeed-icon {
+  background-size: cover;
+  background-position: center;
+  margin: 8px 8px 8px 0;
+  min-width: 12px;
+}
+
+//Status icon
+.caffeine-icon {
+  background-size: cover;
+  background-position: center;
+  margin: 6px 0px 10px;
+  min-width: 16px;
+}
+
+.night-light-icon {
+  background-size: cover;
+  background-position: center;
+  margin: 10px 0px 10px;
+  min-width: 16px;
+}
+
+// Music
+.music-pop {
+  background-color: $fg-dark;
+  background-size: cover;
+  font-family: $font-family;
+  border-radius: $border-radius;
+  margin-top: -6px;
+  box-shadow: 0 2px 2px 1px rgba($color: #0f0f17, $alpha: 0.2);
+}
+
+.music-cover-art {
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 2px 2px 1px rgba($color: #0f0f17, $alpha: 0.2);
+  min-width: 110px;
+  margin: 10px;
+  border-radius: $border-radius;
+}
+
+.music-title {
+  color: $powder-blue-light;
+  font-size: 12px;
+  font-weight: bold;
+  margin: 10px 0px 0px 0px;
+}
+
+.music-artist {
+  color: $powder-blue-light;
+  font-size: 11px;
+  font-weight: normal;
+  // margin: 0px 0px 0px 0px;
+}
+
+.music-info {
+  margin: 0 0 0 4px;
+}
+
+.music-control {
+  margin: 10px 5px 10px;
+}
+
+.music-player {
+  min-width: 20px;
+  border-radius: $border-radius;
+  padding: 3px 6px 4px;
+  margin: 10px 4px 0;
+  color: $fg-dark;
+  font-size: 10px;
+  background-color: $dark-sky-blue;
+}
+
+.music-player label {
+  margin: 2px 2px 0 0;
+}
+
+.music-player .icon {
+  font-size: 16px;
+  margin: 0 0 0 4px;
+}
+
+.music-btn-prev,
+.music-btn-play,
+.music-btn-next {
+  padding: 0 12px;
+  transition: 0.5s all;
+  color: $dark-sky-blue;
+}
+
+.music-btn-prev:hover,
+.music-btn-play:hover,
+.music-btn-next:hover {
+  color: $white;
+}
+
+.music-btn-prev,
+.music-btn-next {
+  color: $dark-sky-blue;
+  font-size: 20px;
+  font-weight: normal;
+}
+.music-btn-play {
+  color: $dark-sky-blue;
+  font-size: 36px;
+  font-weight: normal;
+}
+
+.music-bar progressbar trough progress {
+  background-color: $dark-sky-blue;
+  min-height: 6px;
+  border-radius: $border-radius;
+}
+.music-bar progressbar trough {
+  background-color: $bg-dark;
+  box-shadow: 0 4px 4px 1px rgba($color: #0f0f17, $alpha: 0.2);
+  border-radius: $border-radius;
+  min-height: 6px;
+  min-width: 200px;
+  margin: 0px 10px 20px 0px;
+}
+
+// Calendar
+.cal {
+  background-color: $fg-dark;
+  font-family: $font-family;
+  font-size: 12px;
+  font-weight: normal;
+  border-radius: $border-radius;
+
+  .cal:selected {
+    color: $white;
+    font-weight: bold;
+  }
+
+  .cal:indeterminate {
+    color: $hunter-green;
+  }
+
+  .cal {
+    &.highlight {
+      padding: 20px;
+    }
+
+    padding: 5px;
+  }
+
+  .cal.button {
+    color: $dark-sky-blue;
+  }
+  .cal.button:hover {
+    color: $white;
+  }
+  .cal.button:backdrop {
+    color: $dark-sky-blue;
+  }
+  .cal.button:disabled {
+    color: $dark-sky-blue;
+  }
+
+  .cal-in {
+    padding: 10px;
+    color: $dark-sky-blue;
+  }
+}
+
+// Control Center
+.control-center {
+  background-color: $bg-dark;
+  border-radius: $border-radius;
+  padding: 32px 10px 32px 10px;
+  border-radius: $border-radius;
+}
+
+// System
+.sys-icon-mem,
+.sys-icon-cpu,
+.sys-icon-temp {
+  font-size: 11px;
+  font-family: $font-family;
+  margin: 28px;
+}
+.sys-win {
+  background-color: $fg-dark;
+  border-radius: $border-radius;
+  padding: 18px;
+}
+.sys-cpu {
+  color: $dark-sky-blue;
+  background-color: $kombu-green;
+}
+.sys-mem {
+  color: $dark-sky-blue;
+  background-color: $kombu-green;
+}
+.sys-temp {
+  color: $dark-sky-blue;
+  background-color: $kombu-green;
+}
+.sys-icon-cpu {
+  color: $dark-sky-blue;
+}
+.sys-icon-mem {
+  color: $dark-sky-blue;
+}
+.sys-icon-temp {
+  color: $dark-sky-blue;
+}
+.sys-label-cpu,
+.sys-label-mem,
+.sys-label-temp {
+  font-family: $font-family;
+  font-weight: 700;
+}
+.sys-label-cpu {
+  color: $dark-sky-blue;
+  margin: 10px 0 0 0;
+}
+.sys-label-mem {
+  color: $dark-sky-blue;
+  margin: 10px 0 0 0;
+}
+.sys-label-temp {
+  color: $dark-sky-blue;
+  margin: 10px 0 0 0;
+}
+.sys-cpu-box {
+  border-radius: $border-radius;
+  margin: 0 10px;
+}
+.sys-mem-box {
+  border-radius: $border-radius;
+  margin: 0 10px;
+}
+.sys-temp-box {
+  border-radius: $border-radius;
+  margin: 0 10px;
+}
+
+// Notification
+.notification-bar {
+  min-width: 356px;
+}
+
+.notification-label {
+  color: $powder-blue-light;
+  font-size: 24px;
+  font-family: $font-family;
+  font-weight: 700;
+}
+
+.notification-clear {
+  background-size: cover;
+  background-position: center;
+  margin: 8px;
+  min-width: 24px;
+}
+
+.notif-parent {
+  background-color: $fg-dark;
+  padding: 5px;
+  margin-bottom: 10px;
+  border-radius: $border-radius;
+}
+
+.notif-child {
+  margin-top: -12px;
+}
+
+.notif-item {
+  color: $dark-sky-blue;
+  background-color: $fg-dark;
+  border-radius: $border-radius;
+  padding: 10px;
+  margin-top: 12px;
+}
+
+.notif-icon {
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 2px 2px 1px rgba($color: #0f0f17, $alpha: 0.2);
+  min-width: 60px;
+  min-height: 50px;
+  border-radius: $border-radius;
+}
+
+.notif-info {
+  margin-left: 10px;
+}
+
+.notif-time {
+  font-size: 10px;
+  opacity: 0.6;
+  margin-right: 10px;
+}
+
+.notif-appname {
+  font-family: $font-family;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.notif-summary {
+  font-family: $font-family;
+  font-weight: normal;
+  font-size: 11px;
+  margin-top: 2px;
+}
+
+.notif-body {
+  font-family: $font-family;
+  font-weight: normal;
+  font-size: 11px;
+  margin-top: 2px;
+}
+
+.notif-empty {
+  padding: 10px;
+  background-color: $fg-dark;
+  min-width: 60px;
+  min-height: 20px;
+  border-radius: $border-radius;
+}
+
+.notif-empty label {
+  color: $powder-blue-light;
+  font-family: $font-family;
+  font-size: 14px;
+}
+
+// Systray
+.systray {
+  background-size: cover;
+  background-position: center;
+  margin: 8px 16px 8px 8px;
+  min-width: 12px;
+  border-radius: 8px;
+}
+
+// SysControl
+.syscontrol .child {
+  margin-bottom: 8px;
+}
+
+.wifi {
+  background-color: $fg-dark;
+  padding: 10px;
+  min-width: 76px;
+  border-radius: 32px;
+}
+
+.wifi box {
+  background-size: 20px 20px;
+  background-position: left;
+  background-repeat: no-repeat;
+  padding: 10px;
+  min-width: 8px;
+}
+
+.wifi label {
+  font-size: 11px;
+  margin-left: 2px;
+  color: $powder-blue-light;
+}
+
+.bluetooth {
+  background-color: $fg-dark;
+  padding: 10px;
+  min-width: 76px;
+  border-radius: 32px;
+}
+
+.bluetooth box {
+  background-size: 18px 18px;
+  background-position: left;
+  background-repeat: no-repeat;
+  padding: 10px;
+}
+
+.bluetooth label {
+  font-size: 11px;
+  margin-left: 6px;
+  color: $powder-blue-light;
+}
+
+.night-light {
+  background-color: $fg-dark;
+  padding: 10px;
+  min-width: 76px;
+  border-radius: 32px;
+}
+
+.night-light box {
+  background-size: 18px 18px;
+  background-position: left;
+  background-repeat: no-repeat;
+  padding: 10px;
+}
+
+.night-light label {
+  font-size: 11px;
+  margin-left: 6px;
+  color: $powder-blue-light;
+}
+
+.cpu-profile {
+  background-color: $fg-dark;
+  padding: 10px;
+  min-width: 76px;
+  border-radius: 32px;
+}
+
+.cpu-profile box {
+  background-size: 18px 18px;
+  background-position: left;
+  background-repeat: no-repeat;
+  padding: 10px;
+}
+
+.cpu-profile label {
+  font-size: 11px;
+  margin-left: 6px;
+  color: $powder-blue-light;
+}
+
+.caffeine {
+  background-color: $fg-dark;
+  padding: 10px;
+  min-width: 76px;
+  border-radius: 32px;
+}
+
+.caffeine box {
+  background-size: 18px 18px;
+  background-position: left;
+  background-repeat: no-repeat;
+  padding: 10px;
+}
+
+.caffeine label {
+  font-size: 11px;
+  margin-left: 6px;
+  color: $powder-blue-light;
+}
+
+.sys-on {
+  background-color: $powder-blue-light;
+}
+
+.sys-on label {
+  color: $fg-dark;
+}
+
+.terminal {
+  background-color: $fg-dark;
+  padding: 10px;
+  min-width: 76px;
+  border-radius: 32px;
+}
+
+.terminal box {
+  background-size: 18px 18px;
+  background-position: left;
+  background-repeat: no-repeat;
+  padding: 10px;
+}
+
+.terminal label {
+  font-size: 11px;
+  margin-left: 6px;
+  color: $powder-blue-light;
+}

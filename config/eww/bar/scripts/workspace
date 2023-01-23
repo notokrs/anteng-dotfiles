@@ -1,0 +1,91 @@
+#/bin/sh
+
+ws1="1"
+ws2="2"
+ws3="3"
+ws4="4"
+ws5="5"
+ws6="6"
+ws7="7"
+ws8="8"
+ws9="9"
+ws10="10"
+
+workspaces() {
+    # check if Occupied
+    o1="o"$(bspc query -D -d .occupied --names | grep -w "$ws1")
+    o2="o"$(bspc query -D -d .occupied --names | grep -w "$ws2")
+    o3="o"$(bspc query -D -d .occupied --names | grep -w "$ws3")
+    o4="o"$(bspc query -D -d .occupied --names | grep -w "$ws4")
+    o5="o"$(bspc query -D -d .occupied --names | grep -w "$ws5")
+    o6="o"$(bspc query -D -d .occupied --names | grep -w "$ws6")
+    o7="o"$(bspc query -D -d .occupied --names | grep -w "$ws7")
+    o8="o"$(bspc query -D -d .occupied --names | grep -w "$ws8")
+    o9="o"$(bspc query -D -d .occupied --names | grep -w "$ws9")
+    o10="o"$(bspc query -D -d .occupied --names | grep -w "$ws10")
+
+    # check if Focused
+    f1="f"$(bspc query -D -d focused --names | grep -w "$ws1")
+    f2="f"$(bspc query -D -d focused --names | grep -w "$ws2")
+    f3="f"$(bspc query -D -d focused --names | grep -w "$ws3")
+    f4="f"$(bspc query -D -d focused --names | grep -w "$ws4")
+    f5="f"$(bspc query -D -d focused --names | grep -w "$ws5")
+    f6="f"$(bspc query -D -d focused --names | grep -w "$ws6")
+    f7="f"$(bspc query -D -d focused --names | grep -w "$ws7")
+    f8="f"$(bspc query -D -d focused --names | grep -w "$ws8")
+    f9="f"$(bspc query -D -d focused --names | grep -w "$ws9")
+    f10="f"$(bspc query -D -d focused --names | grep -w "$ws10")
+
+
+    result=("box :class \"workspaces\" :orientation \"h\" :space-evenly false ")
+
+    if [[ $f1 == "f1" || $o1 == "o1" ]]; then
+        result+=("(eventbox :cursor \"pointer\" (button :onclick \"bspc desktop -f $ws1\" :class \"$o1$f1\" \"$ws1\"))")
+    fi
+
+    if [[ $f2 == "f2"|| $o2 == "o2" ]]; then
+        result+=("(eventbox :cursor \"pointer\" (button :onclick \"bspc desktop -f $ws2\" :class \"$o2$f2\" \"$ws2\"))")
+    fi
+
+    if [[ $f3 == "f3" || $o3 == "o3" ]]; then
+        result+=("(eventbox :cursor \"pointer\" (button :onclick \"bspc desktop -f $ws3\" :class \"$o3$f3\" \"$ws3\"))")
+    fi
+
+    if [[ $f4 == "f4" || $o4 == "o4" ]]; then
+        result+=("(eventbox :cursor \"pointer\" (button :onclick \"bspc desktop -f $ws4\" :class \"$o4$f4\" \"$ws4\"))")
+    fi
+
+    if [[ $f5 == "f5" || $o5 == "o5" ]]; then
+        result+=("(eventbox :cursor \"pointer\" (button :onclick \"bspc desktop -f $ws5\" :class \"$o5$f5\" \"$ws5\"))")
+    fi
+
+    if [[ $f6 == "f6" || $o6 == "o6" ]]; then
+        result+=("(eventbox :cursor \"pointer\" (button :onclick \"bspc desktop -f $ws6\" :class \"$o6$f6\" \"$ws6\"))")
+    fi
+
+    if [[ $f7 == "f7" || $o7 == "o7" ]]; then
+        result+=("(eventbox :cursor \"pointer\" (button :onclick \"bspc desktop -f $ws7\" :class \"$o7$f7\" \"$ws7\"))")
+    fi
+
+    if [[ $f8 == "f8" || $o8 == "o8" ]]; then
+        result+=("(eventbox :cursor \"pointer\" (button :onclick \"bspc desktop -f $ws8\" :class \"$o8$f8\" \"$ws8\"))")
+    fi
+
+    if [[ $f9 == "f9" || $o9 == "o9" ]]; then
+        result+=("(eventbox :cursor \"pointer\" (button :onclick \"bspc desktop -f $ws9\" :class \"$o9$f9\" \"$ws9\"))")
+    fi
+
+    if [[ $f10 == "f10" || $o10 == "o10" ]]; then
+        result+=("(eventbox :cursor \"pointer\" (button :onclick \"bspc desktop -f $ws10\" :class \"$o10$f10\" \"$ws10\"))")
+    fi
+
+    echo "($(IFS=; echo "${result[*]}"))"
+}
+
+{
+    workspaces
+
+    bspc subscribe desktop node_transfer | while read -r _ ; do
+        workspaces
+    done
+}

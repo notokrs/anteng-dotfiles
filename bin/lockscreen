@@ -1,0 +1,53 @@
+#!/bin/sh
+
+source $HOME/.r3dmoon_var
+
+dunstctl set-paused true
+
+i3lock \
+    -n -e --force-clock \
+    --pass-media-keys --pass-volume-keys --indicator\
+    -i $LOCK_WALLPAPER \
+    --radius=$LOCK_RADIUS \
+    --ring-width=$LOCK_RING_WIDTH \
+    --inside-color=$LOCK_FG \
+    --ring-color=$LOCK_FG \
+    --insidever-color=$LOCK_VERIFY \
+    --ringver-color=$LOCK_VERIFY \
+    --insidewrong-color=$LOCK_WRONG \
+    --ringwrong-color=$LOCK_WRONG \
+    --line-uses-inside \
+    --keyhl-color=$LOCK_VERIFY \
+    --separator-color=$LOCK_VERIFY \
+    --bshl-color=$LOCK_VERIFY \
+    --time-str="$LOCK_TIME_STR" \
+    --time-size=$LOCK_TIME_SIZE \
+    --date-str="$LOCK_DATE_STR" \
+    --date-size=$LOCK_DATE_SIZE \
+    --verif-text="$LOCK_VERIF_TEXT" \
+    --wrong-text="$LOCK_WRONG_TEXT" \
+    --noinput-text="" \
+    --greeter-text="$LOCK_GREETER_TEXT" \
+    --ind-pos=$LOCK_IND_POS \
+    --time-font="$LOCK_TIME_FONT" \
+    --date-font="$LOCK_DATE_FONT" \
+    --verif-font="$LOCK_VERIF_FONT" \
+    --greeter-font="$LOCK_GREETER_FONT" \
+    --wrong-font="$LOCK_WRONG_FONT" \
+    --verif-size=$LOCK_VERIF_SIZE \
+    --greeter-size=$LOCK_GREETER_SIZE \
+    --wrong-size=$LOCK_WRONG_SIZE \
+    --time-pos=$LOCK_TIME_POS \
+    --date-pos=$LOCK_DATE_POS \
+    --greeter-pos=$LOCK_GREETER_POS \
+    --wrong-pos=$LOCK_WRONG_POS \
+    --date-color=$LOCK_DATE \
+    --time-color=$LOCK_DATE \
+    --greeter-color=$LOCK_FG \
+    --wrong-color=$LOCK_WRONG \
+    --verif-color=$LOCK_VERIFY \
+    --verif-pos=$LOCK_VERIF_POS \
+    --pointer=default \
+    --refresh-rate=$LOCK_REFRESH_RATE
+
+dunstctl set-paused false
