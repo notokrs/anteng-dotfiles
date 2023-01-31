@@ -31,4 +31,7 @@ case "$WINDOW_NAME" in
     "Event Tester")
         echo "state=floating"
         ;;
+    "btop")
+        echo "state=tiled"
+        ;;
 esac
