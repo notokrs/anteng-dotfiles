@@ -8,12 +8,12 @@
 # https://github.com/dastorm/volume-notification-dunst/blob/master/volume.sh
 # https://gist.github.com/sebastiencs/5d7227f388d93374cebdf72e783fbd6a
 
-function get_brightness {
+get_brightness() {
     xbacklight -get | cut -d '.' -f 1
 }
 
-function send_notification {
-    icon="~/.icons/system/brightness.svg"
+send_notification() {
+    icon="$HOME/.icons/system/brightness.svg"
     brightness=$(get_brightness)
     appName="changeBrightness"
 
@@ -23,10 +23,10 @@ function send_notification {
     bar=$(seq -s "🬋" 0 $((brightness / 5)) | sed 's/[0-9]//g')
 
     # Send the notification
-    dunstify -a $appName -i "$icon" -r 5555 -u normal " $bar"
+    dunstify -a $appName -i "$icon" -r 5555 -u normal "$bar"
 }
 
-case $1 in
+case "$1" in
     up)
         # increase the backlight by 5%
         xbacklight -inc 5

@@ -4,7 +4,7 @@ export DISPLAY=":0"
 export XAUTHORITY="$HOME/.Xauthority"
 export XDG_RUNTIME_DIR="/run/user/1000"
 
-source $HOME/.r3dmoon_var
+source "$HOME/.r3dmoon_var"
 
 PLAYER_STATUS=$(playerctl status 2> /dev/null)
 

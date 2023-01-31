@@ -2,5 +2,5 @@
 
 SWAPDIR="$HOME/.local/share/nvim/swap/"
 
-rm -rf $SWAPDIR
-mkdir $SWAPDIR
+rm -rf "$SWAPDIR"
+mkdir "$SWAPDIR"
