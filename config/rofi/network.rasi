@@ -28,6 +28,7 @@ window {
   anchor:                     center;
   fullscreen:                 false;
   width:                      600px;
+  height:                     480px;
   x-offset:                   0px;
   y-offset:                   0px;
   enabled:                    true;
