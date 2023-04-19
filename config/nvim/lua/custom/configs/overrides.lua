@@ -20,6 +20,7 @@ M.treesitter = {
 		"regex",
 		"markdown",
 		"markdown_inline",
+		"bash",
 	},
 }
 

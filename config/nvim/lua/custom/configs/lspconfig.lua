@@ -3,7 +3,13 @@ local capabilities = require("plugins.configs.lspconfig").capabilities
 
 local lspconfig = require("lspconfig")
 
-local servers = { "html", "cssls", "tsserver", "phpactor", "bashls" }
+local servers = { "html", "cssls", "tsserver", "phpactor", "bashls", "eslint" }
+-- local servers = lspconfig.util.available_servers()
+
+capabilities.textDocument.foldingRange = {
+	dynamicRegistration = false,
+	lineFoldingOnly = true,
+}
 
 for _, lsp in ipairs(servers) do
 	lspconfig[lsp].setup({

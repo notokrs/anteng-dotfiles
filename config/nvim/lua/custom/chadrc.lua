@@ -7,9 +7,12 @@ M.ui = {
 	hl_override = highlights.override,
 	hl_add = highlights.add,
 	transparency = false,
+	nvdash = {
+		load_on_startup = true,
+	},
 }
 
-M.plugins = require("custom.plugins")
+M.plugins = "custom.plugins"
 M.mappings = require("custom.mappings")
 
 return M
