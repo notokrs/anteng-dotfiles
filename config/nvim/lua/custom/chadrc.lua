@@ -2,13 +2,16 @@ local M = {}
 local highlights = require("custom.highlights")
 
 M.ui = {
-	theme = "dark_horizon",
-	theme_toggle = { "dark_horizon", "one_light" },
-	hl_override = highlights.override,
+	theme = "yoru",
+	theme_toggle = { "yoru", "one_light" },
 	hl_add = highlights.add,
-	transparency = false,
+	hl_override = highlights.override,
 	nvdash = {
 		load_on_startup = true,
+	},
+	statusline = {
+		theme = "vscode_colored",
+		-- separator_style = "round",
 	},
 }
 

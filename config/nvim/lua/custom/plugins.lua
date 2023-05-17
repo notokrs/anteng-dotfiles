@@ -1,7 +1,6 @@
 local overrides = require("custom.configs.overrides")
 
 local plugins = {
-	-- Override plugin definition options
 	{
 		"neovim/nvim-lspconfig",
 		dependencies = {
@@ -24,6 +23,12 @@ local plugins = {
 		opts = function()
 			return require("plugins.configs.cmp")
 		end,
+		dependencies = {
+			{ "hrsh7th/cmp-nvim-lsp" },
+			{ "hrsh7th/cmp-buffer" },
+			{ "hrsh7th/cmp-path" },
+			{ "hrsh7th/cmp-cmdline", event = { "BufEnter" } },
+		},
 		config = function(_, opts)
 			require("cmp").setup(opts)
 			require("custom.configs.cmp")
@@ -32,38 +37,32 @@ local plugins = {
 
 	-- overrde plugin configs
 	{ "nvim-treesitter/nvim-treesitter", opts = overrides.treesitter },
-
-	{ "NvChad/ui", opts = overrides.ui },
-
 	{ "lukas-reineke/indent-blankline.nvim", opts = overrides.blankline },
-
 	{ "williamboman/mason.nvim", opts = overrides.mason },
-
 	{ "nvim-tree/nvim-tree.lua", opts = overrides.nvimtree },
 
 	-- Install a plugin
+	{
+		"max397574/better-escape.nvim",
+		event = "InsertEnter",
+		config = function()
+			require("better_escape").setup()
+		end,
+	},
 	-- autotag
-	{ "windwp/nvim-ts-autotag", lazy = false },
-
-	-- autocomplete
-	{ "hrsh7th/cmp-nvim-lsp", lazy = false },
-	{ "hrsh7th/cmp-buffer", lazy = false },
-	{ "hrsh7th/cmp-path", lazy = false },
-	{ "hrsh7th/cmp-cmdline", lazy = false },
+	{ "windwp/nvim-ts-autotag", event = { "BufReadPost" } },
 
 	-- colorizer
-	{ "HiPhish/nvim-ts-rainbow2", lazy = false },
+	{ "HiPhish/nvim-ts-rainbow2", event = { "BufReadPost" } },
 
 	-- yuck
 	{ "elkowar/yuck.vim" },
 
-	-- live server
-	{ "manzeloth/live-server" },
-
 	-- silicon
 	{
-		"krivahtoo/silicon.nvim",
-		lazy = false,
+		"michaelrommel/nvim-silicon",
+		cmd = "Silicon",
+		event = { "BufReadPost" },
 		config = function()
 			require("custom.configs.silicon")
 		end,
@@ -101,6 +100,21 @@ local plugins = {
 		},
 		config = function()
 			require("custom.configs.ufo")
+		end,
+	},
+
+	-- suda.nvim
+	{ "lambdalisue/suda.vim", event = { "BufReadPost" } },
+
+	-- barbecue
+	{
+		"utilyre/barbecue.nvim",
+		event = { "BufReadPost" },
+		dependencies = {
+			"SmiteshP/nvim-navic",
+		},
+		config = function()
+			require("custom.configs.barbecue")
 		end,
 	},
 }

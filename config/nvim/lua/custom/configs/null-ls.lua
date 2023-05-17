@@ -8,7 +8,7 @@ local b = null_ls.builtins
 
 local sources = {
 	-- Formatter
-	-- webdev stuff
+	-- prettier
 	b.formatting.prettier,
 	-- Lua
 	b.formatting.stylua,
@@ -18,6 +18,8 @@ local sources = {
 	b.formatting.phpcbf,
 	-- xml
 	b.formatting.xmlformat,
+	-- eslint
+	b.formatting.eslint,
 
 	-- Diagnostics
 	-- eslint

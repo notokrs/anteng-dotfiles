@@ -6,13 +6,19 @@ M.general = {
 	},
 	n = {
 		[";"] = { ":", "enter command mode", opts = { nowait = true } },
-	["<leader>tt"] = {
-      function()
-        require("base46").toggle_theme()
-      end,
-      "toggle theme",
-    },
-  },
+		["<leader>tt"] = {
+			function()
+				require("base46").toggle_theme()
+			end,
+			"toggle theme",
+		},
+		["<C-]>"] = { ">>", "Indent" },
+		["<C-[>"] = { "<<", "Outdent" },
+	},
+	v = {
+		["<C-]>"] = { "> gv", "Indent Selection" },
+		["<C-[>"] = { "< gv", "Outdent Selection" },
+	},
 }
 
 return M

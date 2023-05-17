@@ -5,7 +5,7 @@ if not present then
 end
 
 ufo.setup({
-	provider_selector = function(bufnr, filetype, buftype)
+	provider_selector = function()
 		return { "lsp", "indent" }
 	end,
 })

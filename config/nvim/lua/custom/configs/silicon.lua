@@ -5,39 +5,27 @@ if not present then
 end
 
 silicon.setup({
-	output = {
-		clipboard = false,
-		-- file = "/home/r3dmoon/Pictures/Silicon",
-		path = "/home/r3dmoon/Pictures/Silicon",
-		format = "silicon_[year][month][day]_[hour][minute][second].png",
-	},
-
 	font = "JetBrainsMono Nerd Font",
-	theme = "Dracula",
 	background = "#AAAAFF",
-
-	shadow = {
-		blur_radius = 0.0, -- (number) The blur radius for the shadow, set to 0.0 for no shadow.
-		offset_x = 0, -- (number) The horizontal offset for the shadow.
-		offset_y = 0, -- (number) The vertical offset for the shadow.
-		color = "#555", -- (string) The color for the shadow.
-	},
-
-	pad_horiz = 100, -- (number) The horizontal padding.
-	pad_vert = 80, -- (number) The vertical padding.
-	line_number = false, -- (boolean) Whether to show line numbers in the screenshot.
-	line_pad = 2, -- (number) The padding between lines.
-	line_offset = 1, -- (number) The starting line number for the screenshot.
-	tab_width = 4, -- (number) The tab width for the screenshot.
-	gobble = false, -- (boolean) Whether to trim extra indentation.
-	highlight_selection = false, -- (boolean) Whether to capture the whole file and highlight selected lines.
-	round_corner = true,
-	window_controls = true, -- (boolean) Whether to show window controls (minimize, maximize, close) in the screenshot.
-	window_title = nil, -- (function) A function that returns the window title as a string.
-
-	watermark = {
-		text = nil, -- (string) The text to use as the watermark, set to nil to disable.
-		color = "#222", -- (string) The color for the watermark text.
-		style = "bold",
-	},
+	theme = "Dracula",
+	no_line_number = false,
+	pad_vert = 80,
+	pad_horiz = 50,
+	no_round_corner = false,
+	no_window_controls = false,
+	line_offset = 1,
+	line_pad = 0,
+	tab_width = 4,
+	language = function()
+		return vim.bo.filetype
+	end,
+	shadow_blur_radius = 16,
+	shadow_offset_x = 8,
+	shadow_offset_y = 8,
+	shadow_color = "#100808",
+	gobble = true,
+	output = function()
+		return "/home/r3dmoon/Pictures/Silicon/" .. os.date("!%Y-%m-%dT%H-%M-%S") .. ".png"
+	end,
+	to_clipboard = false,
 })
