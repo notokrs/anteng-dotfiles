@@ -4,8 +4,8 @@ WID="$1"
 CLASS="$2"
 INSTANCE="$3"
 CONSEQUENCES="$4"
-WINDOW_NAME=`xdotool getwindowname "$WID"`
-WINDOW_ROLE=`xprop -id "$WID" WM_WINDOW_ROLE | cut -d'"' -f 2`
+WINDOW_NAME=$(xdotool getwindowname "$WID")
+WINDOW_ROLE=$(xprop -id "$WID" WM_WINDOW_ROLE | cut -d'"' -f 2)
 
 case "$CLASS" in
     "Brave-browser")
@@ -23,7 +23,7 @@ case "$CLASS" in
         esac
         ;;
     "jetbrains-studio")
-        [[ "$WINDOW_NAME" == "splash" ]] && echo "state=floating center=true"
+        [ "$WINDOW_NAME" = "splash" ] && echo "state=floating center=true"
         ;;
 esac
 

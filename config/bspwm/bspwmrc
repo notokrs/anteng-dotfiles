@@ -16,7 +16,7 @@ bspc config borderless_monocle   true
 bspc config gapless_monocle      true
 
 # Xorg
-USERRES="$HOME/.Xresources"
+USERRES="$HOME"/.Xresources
 
 if [ -f "$USERRES" ]; then
     xrdb -load "$USERRES"
@@ -26,29 +26,29 @@ xset s 600 dpms 600 900 900
 xsetroot -cursor_name left_ptr
 
 # App rule
-$HOME/.config/bspwm/app-rules > /dev/null 2>&1
+"$HOME"/.config/bspwm/app-rules > /dev/null 2>&1
 
 # external rules
-bspc config external_rules_command $HOME/.config/bspwm/external-rules
+bspc config external_rules_command "$HOME"/.config/bspwm/external-rules
 
 # Wallpaper
-feh --no-fehbg --bg-fill $HOME/.wallpaper/wallpaper.jpg
+feh --no-fehbg --bg-fill "$HOME"/.wallpaper/wallpaper.jpg
 
 # Bar
 killall -q eww
-$HOME/.local/bin/eww -c $HOME/.config/eww/bar open bar
+"$HOME"/.local/bin/eww -c "$HOME"/.config/eww/bar open bar
 
 NODE_STATE_PID=$(pgrep -f 'bspc subscribe node_state')
-if [[ -z $NODE_STATE_PID ]]; then
+if [ -z "$NODE_STATE_PID" ]; then
     bspc subscribe node_state | while read -r _ _ _ _ state flag; do
         if [ "$state" != "fullscreen" ]; then
             continue
         fi
 
-        if [ "$flag" == on ]; then
-            $HOME/.local/bin/eww -c $HOME/.config/eww/bar close-all
+        if [ "$flag" = on ]; then
+            "$HOME"/.local/bin/eww -c "$HOME"/.config/eww/bar close-all
         else
-            $HOME/.local/bin/eww -c $HOME/.config/eww/bar open bar
+            "$HOME"/.local/bin/eww -c "$HOME"/.config/eww/bar open bar
         fi
     done &
 fi
@@ -59,10 +59,14 @@ urxvtd -q -o -f &
 
 # Picom
 killall -q picom
-picom --config $HOME/.config/picom/picom.conf &
+picom --config "$HOME"/.config/picom/picom.conf &
 
 # Autostart
-$HOME/.config/bspwm/autostart > /dev/null 2>&1
+"$HOME"/.config/bspwm/autostart > /dev/null 2>&1
+AUTOSTART_PID=$(pgrep -f autostart)
+if [ -n "$AUTOSTART_PID" ]; then
+  killall autostart
+fi
 
 # notify complete
 dunstify -a "System" "Welcome $USER !"
