@@ -5,18 +5,18 @@
 export DISPLAY=":0"
 export XAUTHORITY="$HOME/.Xauthority"
 
-source "$HOME/.r3dmoon_var"
+source "$HOME/.r3dmoon_var" #variable file
 
 del_cache(){
     icon="/usr/share/icons/Papirus-Dark/48x48/apps/Spotify.svg" #change icon location of your icon theme
     dirSize=$(du -shb "$1" | grep -oP '^\d*')
     dirSize=$((dirSize/1000000))
 
-    if [[ $dirSize -gt $CACHE_SPOTIFY_MIN_SIZE ]]; then
+    if [ $dirSize -gt "$CACHE_SPOTIFY_MIN_SIZE" ]; then
         rm -rf "$1"
         mkdir "$1"
         dunstify -i "$icon" -r 8965 -u normal "Delete Spotify cache success"
-    elif [[ $dirSize -lt $CACHE_SPOTIFY_MIN_SIZE ]]; then
+    elif [ $dirSize -lt "$CACHE_SPOTIFY_MIN_SIZE" ]; then
         dunstify -i "$icon" -r 8965 -u normal "Spotify cache less than $CACHE_SPOTIFY_MIN_SIZE MB"
     else
         dunstify -i "$icon" -r 8965 -u normal "Delete Spotify cache failed"

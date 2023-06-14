@@ -34,7 +34,7 @@ LOCK_WRONG_SIZE=23
 
 LOCK_VERIF_TEXT="Verifying..."
 LOCK_WRONG_TEXT="Wrong Password!"
-LOCK_GREETER_TEXT="Type the password to unlock"
+LOCK_GREETER_TEXT="Type password to unlock"
 
 LOCK_TIME_FONT="Rounded Mplus 1c Bold:style=Bold"
 LOCK_DATE_FONT="Rounded Mplus 1c:style=Regular"

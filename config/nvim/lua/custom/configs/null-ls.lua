@@ -16,14 +16,10 @@ local sources = {
 	b.formatting.beautysh,
 	-- php
 	b.formatting.phpcbf,
+	b.diagnostics.phpcs,
+	-- b.formatting.phpcsfixer,
 	-- xml
 	b.formatting.xmlformat,
-	-- eslint
-	b.formatting.eslint,
-
-	-- Diagnostics
-	-- eslint
-	b.diagnostics.eslint,
 }
 
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
@@ -58,7 +54,7 @@ local async_formatting = function(bufnr)
 end
 
 null_ls.setup({
-	debug = true,
+	-- debug = true,
 	sources = sources,
 	on_attach = function(client, bufnr)
 		if client.supports_method("textDocument/formatting") then

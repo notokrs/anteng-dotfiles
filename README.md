@@ -1,4 +1,10 @@
-<img align="center" src="https://i.ibb.co/TL3h1vc/logo-anteng.png" alt="anteng-logo"/>
+<p align="center">
+    <img src="https://i.ibb.co/TL3h1vc/logo-anteng.png" alt="anteng-logo" />
+</center>
+
+<p align="center">
+    <img src="https://img.shields.io/github/repo-size/notokrs/anteng-dotfiles?style=for-the-badge" />
+</p>
 
 **_Antěng (an.teng) in Javanese it means calm, silence and peace. I hope it bring calm and joy._**
 
@@ -12,7 +18,7 @@ Here are some information about my setup :
 - **Shell** : [zsh](https://www.zsh.org/) + [ohmyzsh](https://github.com/ohmyzsh/ohmyzsh) + [power10k](https://github.com/romkatv/powerlevel10k)
 - **Panel/Bar** : [eww](https://github.com/polybar/polybar)
 - **App Launcher** : [rofi](https://github.com/davatorium/rofi)
-- **Compositor** : [picom-animations](https://github.com/dccsillag/picom)
+- **Compositor** : [picom-ftlabs](https://github.com/FT-Labs/picom)
 - **Notify Daemon** : [dunst](https://github.com/dunst-project/dunst)
 - **File Manager** : [Thunar](https://docs.xfce.org/xfce/thunar/start), [ranger](https://github.com/ranger/ranger)
 - **Music Player** : [mpd](https://www.musicpd.org/) + [ncmpcpp](https://github.com/ncmpcpp/ncmpcpp), [spotify](https://www.spotify.com/us/download/linux/)

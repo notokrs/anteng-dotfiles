@@ -1,5 +1,5 @@
 # GTK
-export GTK_USE_PORTAL=1
+# export GTK_USE_PORTAL=1
 
 # QT5
 export QT_QPA_PLATFORMTHEME=qt5ct
@@ -13,7 +13,7 @@ export PATH="$HOME/.config/composer/vendor/bin:$PATH"
 
 # RUBY
 export GEM_HOME="$(ruby -e 'puts Gem.user_dir')"
-export PATH="$PATH:$GEM_HOME/bin"
+export PATH="$GEM_HOME/bin:$PATH"
 
 # RUST
 export PATH="$HOME/.cargo/bin:$PATH"

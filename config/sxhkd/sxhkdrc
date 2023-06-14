@@ -188,7 +188,7 @@ Print
 super + Print
 	scrot ~/Pictures/Screenshot/%Y-%m-%d_%H-%M.png && notify-send "Screenshot success"
 
-super + ctrl + Print
+super + alt + Print
 	scrot -d 5 ~/Pictures/Screenshot/%Y-%m-%d_%H-%M.png && notify-send "Screenshot success"
 
 # Color Picker

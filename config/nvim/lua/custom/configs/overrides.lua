@@ -6,7 +6,7 @@ M.treesitter = {
 	},
 	rainbow = {
 		enable = true,
-		disable = { "html" },
+		disable = { "html", "markdown" },
 		query = "rainbow-parens",
 	},
 	ensure_installed = {
@@ -35,7 +35,6 @@ M.mason = {
 		"html-lsp",
 		"typescript-language-server",
 		"prettier",
-		"eslint-lsp",
 
 		-- shell
 		"bash-language-server",
@@ -72,13 +71,8 @@ M.nvimtree = {
 -- blankline
 M.blankline = {
 	use_treesitter = true,
-	char_highlight = "LineNr",
-	space_char_blankline = " ",
-	show_current_context = true,
-	show_current_context_start = true,
-	show_end_of_line = false,
 	show_first_indent_level = true,
-	show_trailing_blankline_indent = false,
+	show_trailing_blankline_indent = true,
 	context_highlight_list = {
 		"TSRainbowRed",
 		"TSRainbowYellow",
