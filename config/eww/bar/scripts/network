@@ -1,0 +1,63 @@
+#!/bin/bash
+
+INTERFACE=$(ip addr | awk '/state UP/ {print $2}' | sed 's/.$//' | head -n1 | awk '{print $1}')
+IP=$(ip addr show "$INTERFACE" | grep -Po 'inet \d{1,3}(\.\d{1,3}){3}' | awk '{print $2}')
+WIFI=$(awk 'NR==3 {printf("%.0f",$3*10/7)}' /proc/net/wireless)
+SSID=$(iwgetid | awk -F '"' '{ print $2 }')
+
+icon() {
+    if [[ "$INTERFACE" =~ "eth"  ]]; then
+        echo "assets/icons/ethernet.png"
+    elif [[ "$INTERFACE" =~ "wlan" ]]; then
+        if [ "$WIFI" != "" ]; then
+            if [ "$WIFI" -ge "75" ]; then
+                echo "assets/icons/wifi-full.png"
+            elif [ "$WIFI" -ge "50" ]; then
+                echo "assets/icons/wifi-medium.png"
+            elif [ "$WIFI" -ge "25" ]; then
+                echo "assets/icons/wifi-low.png"
+            elif [ "$WIFI" -ge "0" ]; then
+                echo "assets/icons/wifi-weak.png"
+            fi
+        else
+            echo "assets/icons/wifi-off.png"
+        fi
+    elif [[  -z "$INTERFACE" ]]; then
+        echo "assets/icons/offline.png"
+    fi
+}
+
+state(){
+    if [[ "$INTERFACE" =~ "eth" ]]; then
+        echo "Connected via Ethernet"
+    elif [[ "$INTERFACE" =~ "wlan" ]]; then
+        if [  -z "$SSID" ]; then
+            echo "Disconnected"
+        else
+            echo "Connected to $SSID"
+        fi
+    elif [[ -z "$INTERFACE" ]]; then
+        echo "Disconnected"
+    fi
+}
+
+
+text(){
+    if [[ "$INTERFACE" =~ "eth" ]]; then
+        echo "$IP"
+    elif [[ "$INTERFACE" =~ "wlan" ]]; then
+        if [  -z "$SSID" ]; then
+            echo "Disconnected"
+        else
+            echo "$SSID"
+        fi
+    elif [[ -z "$INTERFACE" ]]; then
+        echo "Disconnected"
+    fi
+}
+
+case "$1" in
+    "--text") text ;;
+    "--icon") icon ;;
+    "--state") state ;;
+esac

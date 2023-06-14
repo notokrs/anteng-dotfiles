@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Lets round the float result
 BRI=$(xbacklight -get)
@@ -18,7 +18,7 @@ BRI=$(echo "($BRI+0.5)/1" | bc)
 
 {
     if  [[ $1 = "--level" ]]; then
-        echo $BRI
+        echo "$BRI"
         # elif  [[ $1 = "--icon" ]]; then
         #     icon
     fi

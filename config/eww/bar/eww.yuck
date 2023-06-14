@@ -19,12 +19,12 @@
 (defpoll blue_icon :interval "3s" "scripts/bluetooth --icon")
 (defpoll blue_tip :interval "3s" "scripts/bluetooth --tooltip")
 
-; Wifi
-(defvar wifi_reveal false)
+; Network
+(defvar network_reveal false)
 (defvar network_man "scripts/appservice --network")
-(defpoll wifi_icon :interval "3s" "scripts/wifi --icon")
-(defpoll wifi_ssid :interval "3s" "scripts/wifi --ssid")
-(defpoll wifi_state :interval "3s" "scripts/wifi --state")
+(defpoll network_icon :interval "3s" "scripts/network --icon")
+(defpoll network_text :interval "3s" "scripts/network --text")
+(defpoll network_state :interval "3s" "scripts/network --state")
 
 ; Netspeed
 (defpoll download :interval "2s" "scripts/netspeed --download")
@@ -91,14 +91,14 @@
       (box :class "battery-icon" :style "background-image: url('${battery_icon}');")
       (label :class "battery-label" :text "${battery_lvl}%"))))
 
-; Wifi
-(defwidget wifi []
-  (eventbox :cursor "pointer" :onclick network_man :onhover "${eww_bar} update wifi_reveal=true"
-    :onhoverlost "${eww_bar} update wifi_reveal=false"
-    (box :class "w-e-container" :orientation "h" :space-evenly false :vexpand "false" :hexpand "false" :tooltip "${wifi_state}"
-      (box :class "wifi-icon" :style "background-image: url('${wifi_icon}');")
-      (revealer :transition "slideright" :reveal wifi_reveal :duration duration
-        (label :class "wifi-label" :text "${wifi_ssid}")))))
+; Network
+(defwidget network []
+  (eventbox :cursor "pointer" :onclick network_man :onhover "${eww_bar} update network_reveal=true"
+    :onhoverlost "${eww_bar} update network_reveal=false"
+    (box :class "w-e-container" :orientation "h" :space-evenly false :vexpand "false" :hexpand "false" :tooltip "${network_state}"
+      (box :class "network-icon" :style "background-image: url('${network_icon}');")
+      (revealer :transition "slideright" :reveal network_reveal :duration duration
+        (label :class "network-label" :text "${network_text}")))))
 
 ; Bluetooth
 (defwidget bluetooth []
@@ -136,7 +136,7 @@
     (box :class "w-e-container" :orientation "h" :space-evenly false :vexpand "false" :hexpand "false" :tooltip "${volume_lvl}%"
       (eventbox :onclick volume_man (box :class "volume-icon" :style "background-image: url('${volume_icon}');"))
       (revealer :transition "slideright" :reveal volume_reveal :duration duration
-        (scale :class "volume-scale" :width 100 :active true :value volume_lvl :min 0 :max 101 :orientation "h" :onchange "amixer set Master {}%")))))
+        (scale :class "volume-scale" :width 100 :active true :value volume_lvl :min 0 :max 101 :orientation "h" :onchange "amixer -D pulse set Master {}%")))))
 
 ; ; Brightness
 (defwidget brightness []
@@ -151,7 +151,7 @@
 (defwidget caffeine_status_widget []
   (box :class "w-e-container" :orientation "h" :space-evenly false :vexpand "false" :hexpand "false" 
     :tooltip "Caffeine is on" :visible {caffeine_status ? true : false} 
-    (box :class "caffeine-icon" :style "background-image: url('assets/icons/caffeine.png')")))
+    (box :class "caffeine-icon" :style "background-image: url('assets/icons/caffeine-off.png')")))
 
 ; night light status
 (defwidget night_light_status_widget []
@@ -246,7 +246,6 @@
     (box :orientation "h" :space-evenly false :halign "start" :spacing 6
       (literal :content cpu_power_sys)
       (literal :content caffeine_sys)
-      (terminal)
     )
   ))
 
@@ -267,7 +266,7 @@
     (brightness)
     (volume)
     (bluetooth)
-    (wifi)
+    (network)
     (battery)
     (systray)
   ))

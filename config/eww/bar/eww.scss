@@ -136,14 +136,14 @@ scale scale highlight {
   font-size: 11px;
 }
 
-.wifi-icon {
+.network-icon {
   background-size: cover;
   background-position: center;
   margin: 8px 0;
   min-width: 16px;
 }
 
-.wifi-label {
+.network-label {
   margin-left: 8px;
   font-size: 11px;
 }
@@ -675,14 +675,6 @@ scale scale highlight {
   color: $powder-blue-light;
 }
 
-.sys-on {
-  background-color: $powder-blue-light;
-}
-
-.sys-on label {
-  color: $fg-dark;
-}
-
 .terminal {
   background-color: $fg-dark;
   padding: 10px;
@@ -701,4 +693,32 @@ scale scale highlight {
   font-size: 11px;
   margin-left: 6px;
   color: $powder-blue-light;
+}
+
+.auto-light {
+  background-color: $fg-dark;
+  padding: 10px;
+  min-width: 76px;
+  border-radius: 32px;
+}
+
+.auto-light box {
+  background-size: 18px 18px;
+  background-position: left;
+  background-repeat: no-repeat;
+  padding: 10px;
+}
+
+.auto-light label {
+  font-size: 11px;
+  margin-left: 6px;
+  color: $powder-blue-light;
+}
+
+.sys-on {
+  background-color: $powder-blue-light;
+}
+
+.sys-on label {
+  color: $fg-dark;
 }

@@ -1,10 +1,10 @@
 #!/bin/sh
 
-TINT2_PID=`pgrep tint2`
+TINT2_PID=$(pgrep tint2)
 
 toggle ()
 {
-    if [[ -n $TINT2_PID ]]; then
+    if [ -n "$TINT2_PID" ]; then
         pkill tint2
         exit 1
     else
@@ -15,7 +15,7 @@ toggle ()
 
 status ()
 {
-    if [[ -n $TINT2_PID ]]; then
+    if [ -n "$TINT2_PID" ]; then
         echo "true"
     else
         echo "false"

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 #dependencies = jq
 
@@ -8,7 +8,7 @@ SLEEP=5
 
 create_cache(){
     urgency=""
-    ignored_app=("changeVolume", "changeBrightness") # add your ignored app
+    ignored_app=("changeVolume" "changeBrightness") # add your ignored app
     timestamp=`date +%s`
 
     case "$DUNST_URGENCY" in
@@ -16,7 +16,7 @@ create_cache(){
         *) urgency="OTHER" ;;
     esac
 
-    if [[ ! "${ignored_app[*]}" =~ "$DUNST_APP_NAME" ]]; then
+    if [[ ! "${ignored_app[*]}" =~ $DUNST_APP_NAME ]]; then
         json='{
             "id": "'$DUNST_ID'",
             "appname": "'$DUNST_APP_NAME'",

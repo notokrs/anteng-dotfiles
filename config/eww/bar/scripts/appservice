@@ -1,10 +1,14 @@
-#!/bin/bash
+#!/bin/sh
 
 {
     case $1 in
         "--network")
-            export ROFI_COMMAND="rofi -dmenu -theme "$HOME/.config/rofi/network.rasi""
-            rofi-connman ;;
+            # using connman
+            # export ROFI_COMMAND="rofi -dmenu -theme $HOME/.config/rofi/network.rasi
+            # rofi-connman ;;
+
+            # using Network Manager
+            networkmanager_dmenu -theme $HOME/.config/rofi/network.rasi;;
         "--bluetooth") blueman-manager ;;
             # "--battery") xfce4-power-manager-settings ;;
         "--volume") pavucontrol ;;

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # scripts edited from adi1090x
 
@@ -7,21 +7,19 @@
 # Ignored list player
 IGNORE_PLAYER_LIST=("smplayer")
 
-STATUS=`playerctl status --ignore-player=$(IFS=,; echo "${IGNORE_PLAYER_LIST[*]}") 2> /dev/null`
-MUSIC_DIR=`cat ~/.ncmpcpp/config | grep 'mpd_music_dir' | awk -F'"' '{print $2}'`
+STATUS=$(playerctl status --ignore-player="$(IFS=,; echo "${IGNORE_PLAYER_LIST[*]}")" 2> /dev/null)
+MUSIC_DIR=$(grep 'mpd_music_dir' < "$HOME"/.ncmpcpp/config | awk -F'"' '{print $2}')
 
 ALBUM_ART_FOLDER="/tmp/album_art"
 
-if [[ ! -d $ALBUM_ART_FOLDER ]]; then
-    mkdir $ALBUM_ART_FOLDER
-fi
+[ ! -d "$ALBUM_ART_FOLDER" ] && mkdir "$ALBUM_ART_FOLDER"
 
 COVER="assets/images/cover.jpg"
 
-TRACKID_SPOTIFY=`playerctl --ignore-player=$(IFS=,; echo "${IGNORE_PLAYER_LIST[*]}") metadata mpris:trackid 2> /dev/null | awk -F/ '{print $NF}'`
-TRACKID_MPD=`playerctl --ignore-player=$(IFS=,; echo "${IGNORE_PLAYER_LIST[*]}") metadata mpris:trackid 2> /dev/null | awk -F/ '{print $NF}' | sed "s/['\"]//g"`
+TRACKID_SPOTIFY=$(playerctl --ignore-player="$(IFS=,; echo "${IGNORE_PLAYER_LIST[*]}")" metadata mpris:trackid 2> /dev/null | awk -F/ '{print $NF}')
+TRACKID_MPD=$(playerctl --ignore-player="$(IFS=,; echo "${IGNORE_PLAYER_LIST[*]}")" metadata mpris:trackid 2> /dev/null | awk -F/ '{print $NF}' | sed "s/['\"]//g")
 
-COVER_URL=`playerctl --ignore-player=$(IFS=,; echo "${IGNORE_PLAYER_LIST[*]}") metadata mpris:artUrl 2> /dev/null`
+COVER_URL=$(playerctl --ignore-player="$(IFS=,; echo "${IGNORE_PLAYER_LIST[*]}")" metadata mpris:artUrl 2> /dev/null)
 
 ## Get status
 get_status() {
@@ -55,10 +53,10 @@ get_status_bool(){
 # }
 
 get_song() {
-    title=`playerctl --ignore-player=$(IFS=,; echo "${IGNORE_PLAYER_LIST[*]}") metadata title 2> /dev/null`
+    title=$(playerctl --ignore-player="$(IFS=,; echo "${IGNORE_PLAYER_LIST[*]}")" metadata title 2> /dev/null)
 
-    if [[ $STATUS == *"Playing"* || $STATUS == *"Paused"* || $STATUS == *"Stopped"* ]]; then
-        echo $title
+    if [[ $STATUS = *"Playing"* || $STATUS = *"Paused"* || $STATUS = *"Stopped"* ]]; then
+        echo "$title"
     else
         echo "Media Not Found"
     fi
@@ -79,22 +77,22 @@ get_song() {
 # }
 
 get_artist() {
-    artist=`playerctl --ignore-player=$(IFS=,; echo "${IGNORE_PLAYER_LIST[*]}") metadata artist 2> /dev/null`
+    artist=$(playerctl --ignore-player="$(IFS=,; echo "${IGNORE_PLAYER_LIST[*]}")" metadata artist 2> /dev/null)
 
     if [[ $STATUS == *"Playing"* || $STATUS == *"Paused"* ]]; then
-        echo $artist
+        echo "$artist"
     fi
 }
 
-## Get time
+# Get time
 get_percent() {
-    position=`playerctl --ignore-player=$(IFS=,; echo "${IGNORE_PLAYER_LIST[*]}") position | awk -F. '{print $1}'`
-    length=`playerctl --ignore-player=$(IFS=,; echo "${IGNORE_PLAYER_LIST[*]}") metadata mpris:length 2> /dev/null`
+    position=$(playerctl --ignore-player="$(IFS=,; echo "${IGNORE_PLAYER_LIST[*]}")" position | awk -F. '{print $1}')
+    length=$(playerctl --ignore-player="$(IFS=,; echo "${IGNORE_PLAYER_LIST[*]}")" metadata mpris:length 2> /dev/null)
 
-    length=$(($length/1000000))
+    length=$((length/1000000))
 
-    percent=`awk "BEGIN{print ($position/$length)*100}" | awk -F. '{print $1}'`
-    if [[ -z $percent  ]]; then
+    percent=$(awk "BEGIN{print ($position/$length)*100}" | awk -F. '{print $1}')
+    if [ -z "$percent" ]; then
         echo "0"
     else
         echo "$percent"
@@ -102,29 +100,29 @@ get_percent() {
 }
 
 get_position() {
-    position=`playerctl --ignore-player=$(IFS=,; echo "${IGNORE_PLAYER_LIST[*]}") position | awk -F. '{print $1}'`
-    if [[ -z $position ]]; then
-        echo "0"
+    position=$(playerctl --ignore-player="$(IFS=,; echo "${IGNORE_PLAYER_LIST[*]}")" position | awk -F. '{print $1}')
+    if [ -z "$position" ]; then
+        echo '0'
     else
-        echo $position
+        echo "$position"
     fi
 }
 
 get_player(){
-    playerctl --ignore-player=$(IFS=,; echo "${IGNORE_PLAYER_LIST[*]}") metadata | awk 'NR==1{print $1}'
+    playerctl --ignore-player="$(IFS=,; echo "${IGNORE_PLAYER_LIST[*]}")" metadata | awk 'NR==1{print $1}'
 }
 
 get_bg(){
-    TITLE=`playerctl --ignore-player=$(IFS=,; echo "${IGNORE_PLAYER_LIST[*]}") metadata title | sed 's/ //g' | awk '{print tolower($0)}'`
+    TITLE=$(playerctl --ignore-player="$(IFS=,; echo "${IGNORE_PLAYER_LIST[*]}")" metadata title | sed 's/ //g' | awk '{print tolower($0)}')
     if [[ $STATUS == *"Playing"* || $STATUS == *"Paused"* || $STATUS == *"Stopped"* ]];then
         case "$(get_player)" in
             "spotify")
                 BG="$ALBUM_ART_FOLDER/bg_$TRACKID_SPOTIFY.jpg"
-                echo $BG
+                echo "$BG"
                 ;;
             "mpd")
                 BG="$ALBUM_ART_FOLDER/bg_$TITLE-$TRACKID_MPD.jpg"
-                echo $BG
+                echo "$BG"
                 ;;
             "chromium")
                 echo ""
@@ -147,15 +145,15 @@ get_cover() {
                 BG="$ALBUM_ART_FOLDER/bg_$TRACKID_SPOTIFY.jpg"
 
                 if [[ ! -f $COVER ]]; then
-                    curl $COVER_URL > $COVER
+                    curl "$COVER_URL" > "$COVER"
                     ffmpeg -i "$COVER" -vf scale=200:200 "$COVER"  -y &> /dev/null
                     convert -brightness-contrast -50x-30 -blur 0x25 "$COVER" "$BG"
                 fi
 
-                echo $COVER
+                echo "$COVER"
                 ;;
             "mpd")
-                TITLE=`playerctl --ignore-player=$(IFS=,; echo "${IGNORE_PLAYER_LIST[*]}") metadata title | sed 's/ //g' | awk '{print tolower($0)}'`
+                TITLE=$(playerctl --ignore-player="$(IFS=,; echo "${IGNORE_PLAYER_LIST[*]}")" metadata title | sed 's/ //g' | awk '{print tolower($0)}')
                 COVER="$ALBUM_ART_FOLDER/cover_$TITLE-$TRACKID_MPD.jpg"
                 BG="$ALBUM_ART_FOLDER/bg_$TITLE-$TRACKID_MPD.jpg"
 
@@ -164,13 +162,13 @@ get_cover() {
                     convert -brightness-contrast -50x-30 -blur 0x25 "$COVER" "$BG"
                 fi
 
-                echo $COVER
+                echo "$COVER"
                 ;;
             "chromium")
-                echo $COVER
+                echo "$COVER"
                 ;;
             *)
-                echo $COVER
+                echo "$COVER"
                 ;;
         esac
     else
