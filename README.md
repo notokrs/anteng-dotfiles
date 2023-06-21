@@ -1,6 +1,6 @@
 <p align="center">
     <img src="https://i.ibb.co/TL3h1vc/logo-anteng.png" alt="anteng-logo" />
-</center>
+</p>
 
 <p align="center">
     <img src="https://img.shields.io/github/repo-size/notokrs/anteng-dotfiles?style=for-the-badge" />

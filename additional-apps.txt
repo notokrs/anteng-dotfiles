@@ -1,1 +1,1 @@
-megacmd keepassxc kdeconnect xsuspender-git 
+megacmd keepassxc xsuspender-git 

@@ -268,7 +268,7 @@ scale scale highlight {
   box-shadow: 0 2px 2px 1px rgba($color: #0f0f17, $alpha: 0.2);
   min-width: 110px;
   margin: 10px;
-  border-radius: $border-radius;
+  border-radius: 8px;
 }
 
 .music-title {
@@ -290,14 +290,14 @@ scale scale highlight {
 }
 
 .music-control {
-  margin: 10px 5px 10px;
+  margin: 20px 0 10px;
 }
 
 .music-player {
   min-width: 20px;
-  border-radius: $border-radius;
+  border-radius: 10px;
   padding: 3px 6px 4px;
-  margin: 10px 4px 0;
+  margin: 10px 2px 0;
   color: $fg-dark;
   font-size: 10px;
   background-color: $dark-sky-blue;
@@ -315,6 +315,7 @@ scale scale highlight {
 .music-btn-prev,
 .music-btn-play,
 .music-btn-next {
+  font-size: 18px;
   padding: 0 12px;
   transition: 0.5s all;
   color: $dark-sky-blue;
@@ -329,12 +330,10 @@ scale scale highlight {
 .music-btn-prev,
 .music-btn-next {
   color: $dark-sky-blue;
-  font-size: 20px;
   font-weight: normal;
 }
 .music-btn-play {
   color: $dark-sky-blue;
-  font-size: 36px;
   font-weight: normal;
 }
 
@@ -360,16 +359,16 @@ scale scale highlight {
   font-weight: normal;
   border-radius: $border-radius;
 
-  .cal:selected {
+  &:selected {
     color: $white;
     font-weight: bold;
   }
 
-  .cal:indeterminate {
+  &:indeterminate {
     color: $hunter-green;
   }
 
-  .cal {
+  & {
     &.highlight {
       padding: 20px;
     }

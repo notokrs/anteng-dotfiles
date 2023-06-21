@@ -55,7 +55,7 @@ inputbar {
   children:                   [ "textbox-prompt-colon", "entry" ];
 }
 textbox-prompt-colon {
-  font:                       "FiraCode Nerd Font 10";
+  font:                       "JetBrainsMono Nerd Font 10";
   enabled:                    true;
   expand:                     false;
   str:                        "";
