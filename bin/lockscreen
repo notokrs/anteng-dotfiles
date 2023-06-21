@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/env bash
 
 source "$HOME/.r3dmoon_var"
 

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/env bash
 
 # modified from = https://gist.github.com/dagelf/ab2bad26ce96fa8d79b0834cd8cab549
 

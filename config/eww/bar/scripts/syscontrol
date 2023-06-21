@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/env bash
 
 # dependencies = cpupower-gui (bc cpupower-gui doesn't require root when change governor), networkmanager, xorg-xset, clight
 

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/env bash
 
 pgrep -x sxhkd > /dev/null || sxhkd &
 
@@ -65,7 +65,7 @@ picom --config "$HOME"/.config/picom/picom.conf &
 "$HOME"/.config/bspwm/autostart > /dev/null 2>&1
 AUTOSTART_PID=$(pgrep -f autostart)
 if [ -n "$AUTOSTART_PID" ]; then
-  killall autostart
+    killall autostart
 fi
 
 # notify complete

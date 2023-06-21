@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/env bash
 
 WID="$1"
 CLASS="$2"

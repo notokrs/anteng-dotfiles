@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/env bash
 
 TINT2_PID=$(pgrep tint2)
 

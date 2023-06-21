@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/env bash
 
 export DISPLAY=":0"
 export XAUTHORITY="$HOME/.Xauthority"
@@ -20,8 +20,8 @@ notify_low(){
     ICON="$HOME/.local/share/icons/system/battery-low.svg"
 
     player_pause
-    dunstify -i $ICON -r 5674 -u normal -t 10000 "Battery Low! Please Charge!"
-    mpg123 --loop 3 -q $HOME/Music/battery_low.mp3
+    dunstify -i "$ICON" -r 5674 -u normal -t 10000 "Battery Low! Please Charge!"
+    mpg123 --loop 3 -q "$HOME"/Music/battery_low.mp3
     player_play
 }
 
@@ -29,8 +29,8 @@ notify_full(){
     ICON="$HOME/.local/share/icons/system/battery-full.svg"
 
     player_pause
-    dunstify -i $ICON -r 5674 -u normal -t 10000 "Battery Full! Please Unplug The Charger!"
-    mpg123 --loop 3 -q $HOME/Music/battery_full.mp3
+    dunstify -i "$ICON" -r 5674 -u normal -t 10000 "Battery Full! Please Unplug The Charger!"
+    mpg123 --loop 3 -q "$HOME"/Music/battery_full.mp3
     player_play
 }
 

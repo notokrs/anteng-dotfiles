@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/env bash
 
 VOL=$(amixer -D pulse get Master | awk -F'[][]' '/Right:|Mono:/ && NF > 1 {sub(/%/, ""); printf "%0.0f\n", $2}')
 

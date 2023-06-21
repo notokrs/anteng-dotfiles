@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/env bash
 
 SWAPDIR="$HOME/.local/share/nvim/swap/"
 

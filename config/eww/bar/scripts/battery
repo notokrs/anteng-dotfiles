@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/env bash
 
 level() {
     BAT=$(find /sys/class/power_supply/BAT?)

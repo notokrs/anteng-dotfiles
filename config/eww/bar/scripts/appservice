@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/env bash
 
 {
     case $1 in
@@ -8,7 +8,7 @@
             # rofi-connman ;;
 
             # using Network Manager
-            networkmanager_dmenu -theme $HOME/.config/rofi/network.rasi;;
+            networkmanager_dmenu -theme "$HOME"/.config/rofi/network.rasi ;;
         "--bluetooth") blueman-manager ;;
             # "--battery") xfce4-power-manager-settings ;;
         "--volume") pavucontrol ;;

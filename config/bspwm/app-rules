@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/env bash
 
 bspc rule -a Gimp-2.10 desktop='^8' follow=on
 bspc rule -a Blueman-manager state=floating
@@ -21,6 +21,7 @@ bspc rule -a Galculator state=floating
 bspc rule -a hp-toolbox state=floating
 bspc rule -a xpad state=floating border=off locked=on sticky=on layer=below manage=off
 bspc rule -a xdman-Main state=floating
+bspc rule -a Xdm-app state=floating
 bspc rule -a scrcpy state=floating
 bspc rule -a Light-locker-settings.py state=floating center=true
 bspc rule -a Wihotspot-gui state=floating center=true

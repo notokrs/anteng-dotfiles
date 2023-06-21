@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/env bash
 
 TOOLTIP=""
 
@@ -49,7 +49,7 @@ state() {
 
             BATTERY=$(upower -i /org/freedesktop/UPower/devices/"$DEVICE_ID" | grep percentage | grep -Po '\d+%')
 
-            if [ -z $BATTERY ]; then
+            if [ -z "$BATTERY" ]; then
                 TOOLTIP="Connected to $DEVICE"
                 echo "$DEVICE"
             else

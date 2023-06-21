@@ -1,7 +1,7 @@
-#!/bin/sh
+#!/bin/env bash
 
 WIREPLUMBER_PID=$(pgrep wireplumber)
-REDSHIFT_PID=$(pgreg redshift)
+REDSHIFT_PID=$(pgrep redshift)
 MPDRIS_PID=$(pgrep -f mpDris2)
 LXPOLKIT_PID=$(pgrep lxpolkit)
 PIPEWIRE_PID=$(pgrep -f pipewire)

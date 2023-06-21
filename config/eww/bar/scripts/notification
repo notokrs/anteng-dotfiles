@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/env bash
 
 #dependencies = jq
 
@@ -9,7 +9,7 @@ SLEEP=5
 create_cache(){
     urgency=""
     ignored_app=("changeVolume" "changeBrightness") # add your ignored app
-    timestamp=`date +%s`
+    timestamp=$(date +%s)
 
     case "$DUNST_URGENCY" in
         "LOW"|"NORMAL"|"CRITICAL") urgency=$DUNST_URGENCY ;;
@@ -26,11 +26,11 @@ create_cache(){
             "urgency": "'$urgency'"
         }'
 
-        if [[ ! -s $NOTIF_LOG ]]; then
-            echo $json | jq '.' | jq -s > $NOTIF_LOG
+        if [ ! -s "$NOTIF_LOG" ]; then
+            echo "$json" | jq '.' | jq -s > "$NOTIF_LOG"
         else
-            eval cp $NOTIF_LOG $TMP_NOTIF_LOG
-            eval cat $TMP_NOTIF_LOG | jq " . |= [$json] +." > $NOTIF_LOG
+            eval cp "$NOTIF_LOG" "$TMP_NOTIF_LOG"
+            eval cat "$TMP_NOTIF_LOG" | jq " . |= [$json] +." > "$NOTIF_LOG"
         fi
     fi
 }
@@ -41,16 +41,16 @@ monitor(){
     # fi
     make_literal
     while sleep $SLEEP; do
-        if [[ -s $NOTIF_LOG ]]; then
-            if [[ "$(cat $NOTIF_LOG | jq 'length')" == "1" ]]; then
+        if [ -s "$NOTIF_LOG" ]; then
+            if [ "$(jq 'length' < "$NOTIF_LOG")" == "1" ]; then
                 make_literal
             else
-                oldline=`cat $TMP_NOTIF_LOG | jq '.[0].timestamp'`
-                newline=`cat $NOTIF_LOG | jq '.[0].timestamp'`
+                oldline=$(jq '.[0].timestamp' < "$TMP_NOTIF_LOG")
+                newline=$(jq '.[0].timestamp' < "$NOTIF_LOG")
 
-                if [[ $newline != $oldline ]]; then
+                if [ "$newline" != "$oldline" ]; then
                     make_literal
-                    eval cp $NOTIF_LOG $TMP_NOTIF_LOG
+                    eval cp "$NOTIF_LOG" "$TMP_NOTIF_LOG"
                 fi
             fi
         else
@@ -61,23 +61,21 @@ monitor(){
 
 make_literal(){
     widget=("box :class \"notif-child\" :orientation \"v\" :space-evenly false :vexpand \"false\" :hexpand \"false\" ")
-    notif_length=`cat $NOTIF_LOG | jq 'length'`
+    notif_length=$(jq 'length' < "$NOTIF_LOG")
     MAX_NOTIF=4 #max notif count in widget
 
-    if [[ ! -z $notif_length ]]; then
-        if [[ $notif_length -lt $MAX_NOTIF ]]; then
+    if [ -n "$notif_length" ]; then
+        if [ "$notif_length" -lt $MAX_NOTIF ]; then
             MAX_NOTIF=$notif_length
-        else
-            MAX_NOTIF=$MAX_NOTIF
         fi
     fi
 
-    for (( i = 0 ; i < $MAX_NOTIF ; i++ )); do
-        appname=`cat $NOTIF_LOG | jq "[.[] | select(.appname)][$i].appname"`
-        summary=`cat $NOTIF_LOG | jq "[.[] | select(.appname)][$i].summary"`
-        body=`cat $NOTIF_LOG | jq "[.[] | select(.appname)][$i].body"`
-        notif_time=`cat $NOTIF_LOG | jq "[.[] | select(.appname)][$i].timestamp"`
-        notif_time=`date -d @$notif_time +'%H:%M'`
+    for (( i = 0 ; i < MAX_NOTIF ; i++ )); do
+        appname=$(jq "[.[] | select(.appname)][$i].appname" < "$NOTIF_LOG")
+        summary=$(jq "[.[] | select(.appname)][$i].summary" < "$NOTIF_LOG")
+        body=$(jq "[.[] | select(.appname)][$i].body" < "$NOTIF_LOG")
+        notif_time=$(jq "[.[] | select(.appname)][$i].timestamp" < "$NOTIF_LOG")
+        notif_time=$(date -d @"$notif_time" +'%H:%M')
 
         # Without app icon
         widget+=("(box :class \"notif-item\" :orientation \"v\" :space-evenly false :vexpand \"false\" :hexpand \"false\" (box :class \"notif-info\" :orientation \"v\" :space-evenly false :vexpand \"false\" :hexpand \"false\" (label :class \"notif-appname\" :halign \"start\" :text $appname )(label :class \"notif-summary\" :halign \"start\" :wrap \"true\" :limit-width 100 :text $summary)(label :class \"notif-body\" :halign \"start\" :wrap \"true\" :limit-width 100 :text $body :visible {strlength($body) > 0 ? true : false}))(box :orientation \"h\" :space-evenly true :vexpand \"true\" :hexpand \"false\" (label :class \"notif-time\" :halign \"end\" :wrap \"true\" :limit-width 100 :text \"$notif_time\")))")
@@ -90,11 +88,11 @@ make_literal(){
 }
 
 clear_notif(){
-    eval rm -rf $NOTIF_LOG
-    eval rm -rf $TMP_NOTIF_LOG
+    eval rm -rf "$NOTIF_LOG"
+    eval rm -rf "$TMP_NOTIF_LOG"
 
-    eval touch $NOTIF_LOG
-    eval touch $TMP_NOTIF_LOG
+    eval touch "$NOTIF_LOG"
+    eval touch "$TMP_NOTIF_LOG"
 }
 
 {

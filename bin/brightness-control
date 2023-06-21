@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/env bash
 
 # You can call this script like this:
 # $ ./brightnessControl.sh up
