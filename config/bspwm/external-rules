@@ -34,4 +34,10 @@ case "$WINDOW_NAME" in
     "btop")
         echo "state=tiled"
         ;;
+    "Picture in picture"|"Picture-in-Picture")
+        echo "state=floating sticky=on"
+        ;;
+    "Library")
+        echo "state=floating"
+        ;;
 esac

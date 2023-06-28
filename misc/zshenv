@@ -32,3 +32,8 @@ export ADB_MDNS_OPENSCREEN=1
 export AWT_TOOLKIT=MToolkit
 export _JAVA_AWT_WM_NONREPARENTING=1
 export _JAVA_OPTIONS='-Dsun.java2d.opengl-true -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.crossplatformlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
+
+# enable hardware acceleration librewolf
+# export LIBVA_DRIVER_NAME=radeonsi
+export MOZ_DISABLE_RDD_SANDBOX=1
+export MOZ_X11_EGL=1

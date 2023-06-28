@@ -7,7 +7,7 @@ mpd_crossfade_time = 5
 
 # Visualizer
 visualizer_data_source = "/tmp/mpd.fifo"
-visualizer_output_name = "my_fifo"
+visualizer_output_name = "mpd_fifo"
 visualizer_in_stereo = "yes"
 visualizer_type = "spectrum"
 visualizer_look = "▗"
@@ -50,11 +50,11 @@ enable_window_title = "yes"
 statusbar_color = "default"
 
 # UI FORMAT
-now_playing_prefix = "$b$(cyan)"
+now_playing_prefix = "$b$(cyan) "
 now_playing_suffix = "$/b"
 current_item_prefix = "$(yellow)"
 selected_item_suffix = "cyan"
-song_list_format = "{%t $R               $(cyan)  $(cyan)%l$(white)                                 }|{ %f $R$(cyan)   $(cyan)%l$(white)                                 } $(white)"
+song_list_format = "{%t $R               $(cyan)  $(cyan)%l$(white)                                 }|{ %f $R$(cyan)  $(cyan)%l$(white)                                 } $(white)"
 song_status_format = "{$b$2 $5 $8%t $5 $6%b}|{$b$2 $5 $8%f}"
 song_window_title_format = "ncmpcpp"
 

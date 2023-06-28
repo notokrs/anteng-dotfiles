@@ -39,15 +39,15 @@
 
 !! URxvt 
 !! Appearance
-URxvt.font: xft:SpaceMono Nerd Font:style=Regular:size=9.8,xft:Source Han Sans:style=Regular:size=9.5
-URxvt.boldFont: xft:SpaceMono Nerd Font:style=Bold:size=9.8,xft:Source Han Sans:style=Bold:size=9.5
-URxvt.italicFont:xft:SpaceMono Nerd Font:style=Italic:size=9.8,xft:Source Han Sans:style=Italic:size=9.5
-URxvt.boldItalicfont:xft:SpaceMono Nerd Font:style=Bold Italic:size=9.8
+URxvt.font: xft:JetBrainsMono Nerd Font Mono:style=Regular:size=9.8,xft:Source Han Sans:style=Regular:size=9.5
+URxvt.boldFont: xft:JetBrainsMono Nerd Font Mono:style=Bold:size=9.8,xft:Source Han Sans:style=Bold:size=9.5
+URxvt.italicFont:xft:JetBrainsMono Nerd Font Mono:style=Italic:size=9.8,xft:Source Han Sans:style=Italic:size=9.5
+URxvt.boldItalicfont:xft:JetBrainsMono Nerd Font Mono:style=Bold Italic:size=9.8
 Xft.antialias: true
 Xft.hinting: true
 URxvt.letterSpace: 0
 URxvt.lineSpace: 0
-URxvt.geometry: 80x18
+URxvt.geometry: 80x20
 URxvt.internalBorder: 24
 URxvt.cursorBlink: true
 URxvt.cursorUnderline: false
