@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://i.ibb.co/TL3h1vc/logo-anteng.png" alt="anteng-logo" />
+    <img src="https://i.ibb.co/vcT03gn/anteng-logo.webp" alt="anteng-logo" />
 </p>
 
 <p align="center">
@@ -30,24 +30,24 @@ Here are some information about my setup :
 ## 📷 Showcase
 
 - Homescreen
-  ![homescreen](https://i.ibb.co/hYnJq0p/2023-01-21-20-40.png)
-  ![homescreen 2](https://i.ibb.co/zr2jXFr/2023-01-23-15-59.png)
+  ![homescreen](https://i.ibb.co/1bp8c9K/anteng-ss-01.webp)
+  ![homescreen 2](https://i.ibb.co/hF6w9Xn/anteng-ss-02.webp)
 
 - App Launcher (Rofi)
-  ![app launcher](https://i.ibb.co/8BTKvsf/2023-01-21-20-45.png)
+  ![app launcher](https://i.ibb.co/jRzwqRc/anteng-ss-03.webp)
 
 - Lockscreen
-  ![lockscreen](https://i.ibb.co/2vv46D0/2023-01-21-20-51.png)
+  ![lockscreen](https://i.ibb.co/pxyqrcW/anteng-ss-04.webp)
 
 - Emoji Selector
-  ![emoji selector](https://i.ibb.co/hW0sDn7/2023-01-21-20-54.png)
+  ![emoji selector](https://i.ibb.co/CKXWkw3/anteng-ss-05.webp)
 
 - Panel/bar
   ![panel](https://i.ibb.co/3y9wmCr/bar.gif)
 
 - Control Center
   ![control center](https://i.ibb.co/GpM3xMD/cc.gif)
-  ![control center](https://i.ibb.co/tLGXngK/2023-01-21-21-06.png)
+  ![control center](https://i.ibb.co/zV45Yfp/anteng-ss-08.webp)
 
 - Powermenu
-  ![powermenu](https://i.ibb.co/KFBGx9H/2023-01-21-21-28.png)
+  ![powermenu](https://i.ibb.co/9qyCVhK/anteng-ss-09.webp)

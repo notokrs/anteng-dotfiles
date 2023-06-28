@@ -23,5 +23,5 @@ This is my custom config for neovim powered by [NvChad](https://github.com/NvCha
 
 # Showcase
 
-!["Dashboard"](https://i.ibb.co/7gqZmGg/2023-05-17-16-42.png)
-!["Open Code"](https://i.ibb.co/rmCzGgs/2023-05-17-16-44.png)
+!["Dashboard"](https://i.ibb.co/7gmKr0z/nvim-01.webp)
+!["Open Code"](https://i.ibb.co/QD6VDrT/nvim-02.webp)
