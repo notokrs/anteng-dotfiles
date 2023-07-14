@@ -117,6 +117,9 @@ local plugins = {
 			require("custom.configs.barbecue")
 		end,
 	},
+
+	-- codi
+	{ "metakirby5/codi.vim", event = { "BufReadPost" } },
 }
 
 return plugins
