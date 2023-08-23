@@ -9,7 +9,7 @@ local b = null_ls.builtins
 local sources = {
 	-- Formatter
 	-- prettier
-	b.formatting.prettier,
+	b.formatting.prettier.with({ filetypes = { "html", "markdown", "css", "svelte" } }),
 	-- Lua
 	b.formatting.stylua,
 	-- shell

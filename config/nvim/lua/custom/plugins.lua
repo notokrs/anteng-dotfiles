@@ -77,7 +77,12 @@ local plugins = {
 		end,
 		dependencies = {
 			"MunifTanjim/nui.nvim",
-			"rcarriga/nvim-notify",
+			{
+				"rcarriga/nvim-notify",
+				config = function()
+					require("custom.configs.notify")
+				end,
+			},
 		},
 	},
 
@@ -120,6 +125,8 @@ local plugins = {
 
 	-- codi
 	{ "metakirby5/codi.vim", event = { "BufReadPost" } },
+	--mason lspconfig
+	{ "williamboman/mason-lspconfig.nvim", event = { "BufReadPost" } },
 }
 
 return plugins
