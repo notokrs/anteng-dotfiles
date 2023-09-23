@@ -170,7 +170,7 @@ XF86SplitScreen
 
 # power menu
 ctrl + alt + Delete
-  rofi-powermenu
+  ~/.local/bin/rofi-powermenu
 
 # thunar file manager
 super + e
