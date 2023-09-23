@@ -5,6 +5,8 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
     source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+[ -f ~/.p10k.zsh ] && source ~/.p10k.zsh
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -105,6 +107,50 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# Export
+# GTK
+# export GTK_USE_PORTAL=1
+
+# QT5
+export QT_QPA_PLATFORMTHEME=qt5ct
+
+# EDITOR
+export VISUAL=nvim
+export EDITOR=nvim
+
+# RUBY
+export GEM_HOME="$(ruby -e 'puts Gem.user_dir')"
+export PATH="$GEM_HOME/bin:$PATH"
+
+# RUST - RUSTUP
+export PATH="$HOME/.cargo/bin:$PATH"
+
+# NODE JS - NVM
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# LOCAL BIN
+export PATH="$HOME/.local/bin:$PATH"
+
+# ANDROID DEV
+export GRADLE_USER_HOME="/mnt/DATA_III/Android-Studio/.gradle"
+#export STUDIO_JDK=/usr/lib/jvm/default
+export ANDROID_HOME="/mnt/DATA_III/Android-Studio/Linux/SDK"
+export PATH="$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$PATH"
+export ADB_MDNS_OPENSCREEN=1
+
+# JAVA
+export AWT_TOOLKIT=MToolkit
+export _JAVA_AWT_WM_NONREPARENTING=1
+export _JAVA_OPTIONS="-Dsun.java2d.opengl-true -Dawt.useSystemAAFontSettings=on \
+  -Dswing.aatext=true -Dswing.crossplatformlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -Dorg.lwjgl.glfw.libname=/usr/lib64/libglfw.so.3"
+
+# enable hardware acceleration firefox
+# export LIBVA_DRIVER_NAME=radeonsi
+export MOZ_DISABLE_RDD_SANDBOX=1
+export MOZ_X11_EGL=1
+
 # Alias
 alias vim=nvim
 alias vi=nvim
@@ -112,12 +158,6 @@ alias v=nvim
 alias n=nvim
 alias clear-ram="doas sh -c 'sync; echo 3 > /proc/sys/vm/drop_caches'"
 alias trim-all="fstrim -va"
-
-# powerlevel10k
-[ -f ~/.p10k.zsh ] && source ~/.p10k.zsh
-
-# nvm
-source /usr/share/nvm/init-nvm.sh
 
 # Remove Duplicate Entries In History
 setopt HIST_EXPIRE_DUPS_FIRST
