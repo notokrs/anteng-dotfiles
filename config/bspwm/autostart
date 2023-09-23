@@ -6,6 +6,7 @@ MPDRIS_PID=$(pgrep -f mpDris2)
 LXPOLKIT_PID=$(pgrep lxpolkit)
 PIPEWIRE_PID=$(pgrep -f pipewire)
 PIPEWIRE_PULSE_PID=$(pgrep -f pipewire-pulse)
+# SYNCTHING_PID=$(pgrep -f 'syncthing --no-browser')
 
 # pipewire
 [ -z "$PIPEWIRE_PID" ] && pipewire &
@@ -53,3 +54,7 @@ playerctld &
 #xsuspender
 killall xsuspender
 nohup xsuspender & disown
+
+# Syncthing
+killall syncthing
+syncthing --no-browser &
