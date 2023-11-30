@@ -10,7 +10,18 @@ local sources = {
 	-- Formatter
 	-- prettier
 	b.formatting.prettier.with({
-		filetypes = { "html", "markdown", "css", "svelte", "javascript", "typescript", "json" },
+		filetypes = {
+			"html",
+			"markdown",
+			"css",
+			"svelte",
+			"javascript",
+			"typescript",
+			"json",
+			"javascriptreact",
+			"typescriptreact",
+			"vue",
+		},
 	}),
 	-- Lua
 	b.formatting.stylua,
@@ -19,7 +30,6 @@ local sources = {
 	-- php
 	b.formatting.phpcbf,
 	b.diagnostics.phpcs,
-	-- b.formatting.phpcsfixer,
 	-- xml
 	b.formatting.xmlformat,
 }
