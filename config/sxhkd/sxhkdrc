@@ -178,7 +178,7 @@ super + e
 
 # rofi-emoji
 super + @period
-	rofi -show emoji -modi emoji -theme "$HOME/.config/rofi/emoji.rasi"
+	rofi -show emoji -modi emoji -emoji-format '\{emoji\}' -theme "$HOME/.config/rofi/emoji.rasi"
 
 # Flameshot
 Print

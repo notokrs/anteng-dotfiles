@@ -87,8 +87,8 @@ listbox{
 }
 listview {
   enabled:                    true;
-  columns:                    3;
-  lines:                      7;
+  columns:                    8;
+  lines:                      5;
   cycle:                      true;
   dynamic:                    true;
   scrollbar:                  false;
@@ -107,11 +107,12 @@ listview {
 element {
   enabled:                    true;
   spacing:                    15px;
-  padding:                    7px;
+  padding:                    7px 0px 7px 7px;
   border-radius:              8px;
   background-color:           transparent;
   text-color:                 @foreground;
   cursor:                     pointer;
+  children:                   [ element-text ];
 }
 element normal.normal {
   background-color:           inherit;
@@ -121,13 +122,8 @@ element selected.normal {
   background-color:           @selected-background;
   text-color:                 @background-color;
 }
-element-icon {
-  background-color:           transparent;
-  text-color:                 inherit;
-  size:                       3ch;
-  cursor:                     inherit;
-}
 element-text {
+  font:                       "Noto Color Emoji 22";
   background-color:           transparent;
   text-color:                 inherit;
   cursor:                     inherit;
