@@ -14,6 +14,7 @@ local sources = {
 			"html",
 			"markdown",
 			"css",
+			"scss",
 			"svelte",
 			"javascript",
 			"typescript",

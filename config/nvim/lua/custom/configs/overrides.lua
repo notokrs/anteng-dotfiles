@@ -34,6 +34,7 @@ M.mason = {
 		"css-lsp",
 		"html-lsp",
 		"typescript-language-server",
+		"tailwind-language-server",
 		"prettier",
 
 		-- shell
@@ -41,6 +42,7 @@ M.mason = {
 		"beautysh",
 
 		-- php
+		"intelephense",
 		"phpcbf",
 		"phpactor",
 
