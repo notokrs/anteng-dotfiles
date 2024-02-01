@@ -1,1 +1,1 @@
-mpg123 acpi gpick bc jq cpupower-gui-git playerctl rofi-connman xorg-xset clight rofi-emoji picom-ftlabs-git nerd-jetbrains-mono ttf-symbola kitty tint2 mpd ncmpcpp rofi-greenclip bluez bluez-utils qt5-styleplugins qt5ct mpdris2 xclip syncthing
+mpg123 acpi gpick bc jq cpupower-gui-git playerctl rofi-connman xorg-xset rofi-emoji picom-ftlabs-git nerd-jetbrains-mono ttf-symbola kitty tint2 mpd ncmpcpp rofi-greenclip bluez bluez-utils qt5-styleplugins qt5ct mpdris2 xclip syncthing
