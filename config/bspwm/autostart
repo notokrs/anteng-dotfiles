@@ -57,4 +57,4 @@ nohup xsuspender & disown
 
 # Syncthing
 killall syncthing
-syncthing --no-browser &
+/usr/bin/syncthing --no-browser &

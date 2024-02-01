@@ -111,9 +111,6 @@ source $ZSH/oh-my-zsh.sh
 # GTK
 # export GTK_USE_PORTAL=1
 
-# QT5
-export QT_QPA_PLATFORMTHEME=qt5ct
-
 # EDITOR
 export VISUAL=nvim
 export EDITOR=nvim
@@ -136,8 +133,11 @@ export PATH="$HOME/.local/bin:$PATH"
 # ANDROID DEV
 export GRADLE_USER_HOME="/mnt/DATA_III/Android-Studio/.gradle"
 # export STUDIO_JDK="/usr/lib/jvm/default"
+export ANDROID_USER_HOME="/mnt/DATA_III/Android-Studio/.android/"
+export ANDROID_SDK_HOME="/mnt/DATA_III/Android-Studio/.android/"
+export ANDROID_AVD_HOME="/mnt/DATA_III/Android-Studio/.android/avd"
 export ANDROID_HOME="/mnt/DATA_III/Android-Studio/Linux/SDK"
-export PATH="$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$PATH"
+export PATH="$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin/:$ANDROID_HOME/platform-tools:$PATH"
 export ADB_MDNS_OPENSCREEN=1
 
 # JAVA

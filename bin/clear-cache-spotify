@@ -15,11 +15,11 @@ del_cache(){
     if [ $dirSize -gt "$CACHE_SPOTIFY_MIN_SIZE" ]; then
         rm -rf "$1"
         mkdir "$1"
-        dunstify -i "$icon" -r 8965 -u normal "Delete Spotify cache success"
+        dunstify -i "$icon" -r "$2" -u normal "Delete Spotify cache success"
     elif [ $dirSize -lt "$CACHE_SPOTIFY_MIN_SIZE" ]; then
-        dunstify -i "$icon" -r 8965 -u normal "Spotify cache less than $CACHE_SPOTIFY_MIN_SIZE MB"
+        dunstify -i "$icon" -r "$2" -u normal "Spotify cache less than $CACHE_SPOTIFY_MIN_SIZE MB"
     else
-        dunstify -i "$icon" -r 8965 -u normal "Delete Spotify cache failed"
+        dunstify -i "$icon" -r "$2" -u normal "Delete Spotify cache failed"
         exit 1
     fi
 
@@ -29,6 +29,7 @@ del_cache(){
     data="$HOME/.cache/spotify/Data"
     browser="$HOME/.cache/spotify/Browser"
 
-    del_cache "$data"
-    del_cache "$browser"
+    del_cache "$data" 9878
+    sleep 0.5
+    del_cache "$browser" 8912
 }

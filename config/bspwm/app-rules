@@ -38,3 +38,5 @@ bspc rule -a Connman-gtk state=floating
 bspc rule -a 7zfm state=floating
 bspc rule -a Gcr-viewer state=floating
 bspc rule -a CMST\ -\ Connman\ System\ Tray state=floating center=true rectangle=720x680+0+0
+bspc rule -a Notepadqq state=floating
+bspc rule -a vlc state=floating
