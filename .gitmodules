@@ -1,0 +1,3 @@
+[submodule "config/nvim/lua/custom"]
+	path = config/nvim/lua/custom
+	url = https://github.com/notokrs/nvim-config.git
