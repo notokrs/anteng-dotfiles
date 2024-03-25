@@ -119,6 +119,10 @@ export EDITOR=nvim
 export GEM_HOME="$(ruby -e 'puts Gem.user_dir')"
 export PATH="$GEM_HOME/bin:$PATH"
 
+# GOLANG
+export GOPATH="$HOME/.local/share/go"
+export PATH="$PATH:$GOPATH/bin"
+
 # RUST - RUSTUP
 export PATH="$HOME/.cargo/bin:$PATH"
 
@@ -126,6 +130,11 @@ export PATH="$HOME/.cargo/bin:$PATH"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# PYTHON - PYENV
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
 
 # LOCAL BIN
 export PATH="$HOME/.local/bin:$PATH"
